@@ -1,21 +1,38 @@
 import sys
-from PyQt4.QtGui import *
-from PyQt4.uic import loadUiType
-from PyQt4.QtCore import *
+import os
 
+import PyQt4.QtGui as QtGui
+import PyQt4.QtCore as QtCore
+import PyQt4.uic as uic
 
-(form, formbase) = loadUiType('ui/drQueueUi.ui')
+import drQueueCore as core
 
-class drQ(form,QDialog):
-	def __init__(self,*args):
-		QDialog.__init__(self,*args)
+properties={
+    "id": 0,
+    "name":"test",
+    "owner":"user",
+    "status":0,
+    "process":0,
+    "left":0,
+    "done":False,
+    "pri":0,
+    "pool":0
+    }
+
+ui_path=os.path.join(os.path.dirname(__file__),"ui","drQueueUi.ui")
+widget_class, base_class = uic.loadUiType(ui_path)
+
+class drQ(widget_class, base_class):
+	def __init__(self,*args,**kwargs):
+		super(drQ,self).__init__(*args,**kwargs)
 		self.setup()
+		#self.jobs=[]
 		
-	@pyqtSignature("on_exitButton_clicked()")
+	@QtCore.pyqtSignature("on_exitButton_clicked()")
 	def on_exitButton_clicked(self):
 		self.close()
 		
-	@pyqtSignature("on_Refresh_clicked()")
+	@QtCore.pyqtSignature("on_Refresh_clicked()")
 	def on_Refresh_clicked(self):
 		pass
 
@@ -23,25 +40,36 @@ class drQ(form,QDialog):
 		self.setupUi(self)
 		self.setWindowTitle("DrQueue Manager")
 		self.setIcons()
-		self.setAbout()		
+		self.setAbout()
+		#self.add_job()
 		#	set the dialog as a standard window
-		self.setWindowFlags(Qt.Window | Qt.WindowMinimizeButtonHint | Qt.WindowCloseButtonHint | Qt.WindowMaximizeButtonHint)
-	
+		self.setWindowFlags(QtCore.Qt.Window | QtCore.Qt.WindowMinimizeButtonHint | QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMaximizeButtonHint)
+		
+	def add_job(self):
+		num_jobs = len(self.jobs)
+		self.TW_job.setRowCount(num_jobs+1)
+		job_tab = core.JobDataTab()
+		job_tab.add(self.TW_job, num_jobs)
+		self.jobs.append(job_tab)
+		return job_tab
+		
 	def setAbout(self):
-		url=QUrl("about.html")
-		self.AboutBrw.load(url)
+		url=QtCore.QUrl("about.html")
+		self.WV_about.load(url)
 		
 	def setIcons(self):
-		self.setWindowIcon(QIcon("icons/main.svg"))
-		self.tabWidget.setTabIcon(0,QIcon("icons/job.svg"))
-		self.tabWidget.setTabIcon(1,QIcon("icons/nodes.svg"))		
-		self.tabWidget.setTabIcon(2,QIcon("icons/about.svg"))		
+		self.setWindowIcon(QtGui.QIcon("icons/main.svg"))
+		self.TW_main.setTabIcon(0,QtGui.QIcon("icons/job.svg"))
+		self.TW_main.setTabIcon(1,QtGui.QIcon("icons/nodes.svg"))		
+		self.TW_main.setTabIcon(2,QtGui.QIcon("icons/about.svg"))		
 		
 def main():
-	app = QApplication(sys.argv)
+	app = QtGui.QApplication(sys.argv)
 	dialog = drQ()
+	print "dialog",dialog
+	
 	dialog.show()
 	return app.exec_()
 
 if __name__ == "__main__":
-	sys.exit(main())
+	main()

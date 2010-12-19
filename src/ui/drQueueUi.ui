@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>833</width>
+    <width>960</width>
     <height>856</height>
    </rect>
   </property>
@@ -23,11 +23,11 @@
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QSplitter" name="splitter">
+      <widget class="QSplitter" name="ST_main_">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-       <widget class="QTabWidget" name="tabWidget">
+       <widget class="QTabWidget" name="TW_main">
         <property name="enabled">
          <bool>true</bool>
         </property>
@@ -38,24 +38,33 @@
          </sizepolicy>
         </property>
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
-        <widget class="QWidget" name="jobTab">
+        <widget class="QWidget" name="QW_job">
          <attribute name="title">
           <string>Jobs</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout">
           <item row="0" column="0">
-           <widget class="QTableWidget" name="jobTabWidget">
-            <property name="sortingEnabled">
-             <bool>true</bool>
-            </property>
+           <widget class="QTableWidget" name="TW_job">
             <property name="autoFillBackground">
              <bool>false</bool>
             </property>
             <property name="alternatingRowColors">
              <bool>true</bool>
             </property>
+            <property name="sortingEnabled">
+             <bool>true</bool>
+            </property>
+            <attribute name="horizontalHeaderStretchLastSection">
+             <bool>true</bool>
+            </attribute>
+            <attribute name="verticalHeaderCascadingSectionResizes">
+             <bool>true</bool>
+            </attribute>
+            <attribute name="verticalHeaderStretchLastSection">
+             <bool>false</bool>
+            </attribute>
             <attribute name="horizontalHeaderStretchLastSection">
              <bool>true</bool>
             </attribute>
@@ -124,16 +133,25 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="NodesTab">
+        <widget class="QWidget" name="QW_node">
          <attribute name="title">
           <string>Nodes</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_2">
           <item row="0" column="0">
-           <widget class="QTableWidget" name="nodeTabWidget">
+           <widget class="QTableWidget" name="TW_node">
             <property name="sortingEnabled">
              <bool>true</bool>
             </property>
+            <attribute name="horizontalHeaderStretchLastSection">
+             <bool>true</bool>
+            </attribute>
+            <attribute name="verticalHeaderCascadingSectionResizes">
+             <bool>true</bool>
+            </attribute>
+            <attribute name="verticalHeaderStretchLastSection">
+             <bool>false</bool>
+            </attribute>
             <attribute name="horizontalHeaderStretchLastSection">
              <bool>true</bool>
             </attribute>
@@ -192,13 +210,13 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="InfoTab">
+        <widget class="QWidget" name="QW_about">
          <attribute name="title">
           <string>About</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_3">
           <item row="0" column="0">
-           <widget class="QWebView" name="AboutBrw">
+           <widget class="QWebView" name="WV_about">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -306,6 +324,8 @@
     </layout>
    </item>
   </layout>
+  <zorder>ST_main_</zorder>
+  <zorder></zorder>
  </widget>
  <customwidgets>
   <customwidget>
@@ -315,8 +335,8 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>AboutBrw</tabstop>
-  <tabstop>tabWidget</tabstop>
+  <tabstop>WV_about</tabstop>
+  <tabstop>TW_main</tabstop>
   <tabstop>spinBox</tabstop>
   <tabstop>Refresh</tabstop>
   <tabstop>checkBox</tabstop>

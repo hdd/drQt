@@ -3,12 +3,13 @@
 from PyQt4 import QtCore
 from PyQt4 import QtGui
 
-class JobDataUI(QtCore.QObject):
+class JobDataTab(QtCore.QObject):
     def __init__(self):
-        super(JobDataUI,self).__init__()
-
+        super(JobDataTab,self).__init__()
+        
+        self.columns=[]
+        
         self.properties={
-            "tab_id": 0,
             "id": QtGui.QLineEdit(),
             "name":QtGui.QLineEdit(),
             "owner":QtGui.QLineEdit(),
@@ -22,9 +23,15 @@ class JobDataUI(QtCore.QObject):
         
     def add(self,table,index):
         i=0
+        print "adding"
         for prop , value in self.properties.iteritems():
-            table.setCellWidget(index,i,self.input_status)
+            widget = table.setCellWidget(index,i,value)
+            self.columns.append(widget)
             i+=1
+            
+    def update(self,value_dict):
+    	for k,v in value_dict.iteritems():
+    	 self.properties[k].setText(str(v))
 
 
         
