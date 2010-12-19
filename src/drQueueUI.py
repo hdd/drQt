@@ -25,9 +25,9 @@ widget_class, base_class = uic.loadUiType(ui_path)
 class drQ(widget_class, base_class):
 	def __init__(self,*args,**kwargs):
 		super(drQ,self).__init__(*args,**kwargs)
+		self.jobs=[]
 		self.setup()
-		#self.jobs=[]
-		
+
 	@QtCore.pyqtSignature("on_exitButton_clicked()")
 	def on_exitButton_clicked(self):
 		self.close()
@@ -41,7 +41,8 @@ class drQ(widget_class, base_class):
 		self.setWindowTitle("DrQueue Manager")
 		self.setIcons()
 		self.setAbout()
-		#self.add_job()
+		for i in range(10):
+			self.add_job()
 		#	set the dialog as a standard window
 		self.setWindowFlags(QtCore.Qt.Window | QtCore.Qt.WindowMinimizeButtonHint | QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMaximizeButtonHint)
 		
