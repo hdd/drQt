@@ -74,61 +74,6 @@
             <attribute name="verticalHeaderStretchLastSection">
              <bool>false</bool>
             </attribute>
-            <column>
-             <property name="text">
-              <string>Id</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Name</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Owner</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Status</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Process</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Left</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Done</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Failed</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>New Column</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Pri</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Pool</string>
-             </property>
-            </column>
            </widget>
           </item>
          </layout>
@@ -324,7 +269,6 @@
     </layout>
    </item>
   </layout>
-  <zorder>ST_main_</zorder>
   <zorder></zorder>
  </widget>
  <customwidgets>
