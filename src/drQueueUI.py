@@ -8,15 +8,15 @@ import PyQt4.uic as uic
 import drQueueCore as core
 
 properties={
-    "id": 0,
+    "id": "id",
     "name":"test",
     "owner":"user",
-    "status":0,
-    "process":0,
-    "left":0,
-    "done":False,
-    "pri":0,
-    "pool":0
+    "status":"status",
+    "process":"process",
+    "left":"left",
+    "done":"done",
+    "pri":"pri",
+    "pool":"pool"
     }
 
 ui_path=os.path.join(os.path.dirname(__file__),"ui","drQueueUi.ui")
@@ -38,13 +38,20 @@ class drQ(widget_class, base_class):
 
 	def setup(self):
 		self.setupUi(self)
+		
+	
 		self.setWindowTitle("DrQueue Manager")
 		self.setIcons()
 		self.setAbout()
+		
+		#add a couple of jobs
+		self.TW_job.clear()
 		for i in range(10):
-			self.add_job()
+			job = self.add_job()
+			job.update(properties)
 		#	set the dialog as a standard window
 		self.setWindowFlags(QtCore.Qt.Window | QtCore.Qt.WindowMinimizeButtonHint | QtCore.Qt.WindowCloseButtonHint | QtCore.Qt.WindowMaximizeButtonHint)
+		
 		
 	def add_job(self):
 		num_jobs = len(self.jobs)
