@@ -26,6 +26,7 @@ class drQ(widget_class, base_class):
         self.CB_auto_refresh.stateChanged.connect(self.autorefresh)
         
         self.connect(self._timer_,QtCore.SIGNAL("done"),self.refresh)
+        self.SB_refresh_time.setMinimum(1)
         
     def setup_main(self):
         self.setWindowTitle("DrQueue Manager")
@@ -54,8 +55,10 @@ class drQ(widget_class, base_class):
         self.TW_job.setSelectionMode(QtGui.QTableView.SingleSelection)
         
     def refresh(self):
+        self.setCursor(QtCore.Qt.WaitCursor);
         self.init_jobs_tabs()
-    
+        self.setCursor(QtCore.Qt.ArrowCursor);
+        
     def autorefresh(self,status):
         if status:
             print "autorefresh:ON"
@@ -67,6 +70,7 @@ class drQ(widget_class, base_class):
             self._timer_.terminate()
 
     def init_jobs_tabs(self):
+        self.tab_list=[]
         print "building tabs..."
         self.TW_job.clearContents()
         jobs=self._get_all_jobs()

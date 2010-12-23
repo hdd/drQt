@@ -19,15 +19,12 @@ class Timer(QtCore.QThread):
     def set_run_time(self,time=5):
         self.runTime = time
         
-    def run(self):
-        print "thread starting..." 
+    def run(self): 
         while True:
             counter = self.runTime
             for sec in range(self.runTime):
-                print "..tic..."
                 time.sleep(1.0)
                 counter -= 1
-                
             self.emit(QtCore.SIGNAL("done"))
 
 class JobDataTab(QtCore.QObject):
@@ -42,13 +39,11 @@ class JobDataTab(QtCore.QObject):
         self.current_path = os.path.dirname(__file__)
         
         ##job_properties=["id","name","owner","status","process","left","done","pri","pool"]
-        
-        print drq_job_object.__dict__
-        
-        self.icons.append(QtGui.QPixmap(os.path.join(self.current_path,"icons","NONE.png")))  
-        self.icons.append(QtGui.QPixmap(os.path.join(self.current_path,"icons","NONE.png")))  
-        self.icons.append(QtGui.QPixmap(os.path.join(self.current_path,"icons","OK.png")))
-        self.icons.append(QtGui.QPixmap(os.path.join(self.current_path,"icons","OK.png")))
+                
+        self.icons.append(QtGui.QPixmap(os.path.join(self.current_path,"icons","running.png")))  
+        self.icons.append(QtGui.QPixmap(os.path.join(self.current_path,"icons","running.png")))  
+        self.icons.append(QtGui.QPixmap(os.path.join(self.current_path,"icons","stop.png")))
+        self.icons.append(QtGui.QPixmap(os.path.join(self.current_path,"icons","ok.png")))
         
         self._tab_id=QtGui.QLabel()
         self._tab_id.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
@@ -67,16 +62,18 @@ class JobDataTab(QtCore.QObject):
         
         self._tab_priority=QtGui.QLabel()
         self._tab_priority.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
-        
+
+        self._tab_pool=QtGui.QLabel()
+        self._tab_pool.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
         
         
         self._tab_id.setText("%s"%drq_job_object.id)        
         self._tab_name.setText("%s"%drq_job_object.name)
         self._tab_owner.setText("%s"%drq_job_object.owner)
-        self._tab_status.setPixmap( self.icons[drq_job_object.status])
+        self._tab_status.setPixmap( self.icons[drq_job_object.status].scaled(25,25))
         self._tab_procs.setText("%d"%drq_job_object.nprocs)
         self._tab_priority.setText("%d"%drq_job_object.priority)
-        
+        self._tab_pool.setText("%s"%drq_job_object.limits.pool)
         
         
     def add(self,table,index):
@@ -86,3 +83,4 @@ class JobDataTab(QtCore.QObject):
             table.setCellWidget(index,3,self._tab_status) 
             table.setCellWidget(index,4,self._tab_procs) 
             table.setCellWidget(index,7,self._tab_priority) 
+            table.setCellWidget(index,8,self._tab_pool) 
