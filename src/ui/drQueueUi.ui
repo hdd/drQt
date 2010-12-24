@@ -106,51 +106,6 @@
             <attribute name="verticalHeaderStretchLastSection">
              <bool>false</bool>
             </attribute>
-            <column>
-             <property name="text">
-              <string>Id</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Enable</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Running</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Name</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Os</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>CPUs</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Load</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>New Column</string>
-             </property>
-            </column>
-            <column>
-             <property name="text">
-              <string>Pools</string>
-             </property>
-            </column>
            </widget>
           </item>
          </layout>
@@ -161,14 +116,14 @@
          </attribute>
          <layout class="QGridLayout" name="gridLayout_3">
           <item row="0" column="0">
-           <widget class="QWebView" name="WV_about" native="true">
+           <widget class="QWebView" name="WV_about">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <property name="url" stdset="0">
+            <property name="url">
              <url>
               <string>about:blank</string>
              </url>
