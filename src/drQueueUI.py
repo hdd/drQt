@@ -34,7 +34,7 @@ class drQ(widget_class, base_class):
         #    catch the "done" signal from the thread and update the table
         self.connect(self._timer_,QtCore.SIGNAL("done"),self.refresh)
         self.SB_refresh_time.setMinimum(1)
-        
+        self.SB_refresh_time.setValue(3)
         #    set the dialog as a standard window
         self.setWindowFlags(QtCore.Qt.Window |
                             QtCore.Qt.WindowMinimizeButtonHint | 
@@ -80,6 +80,7 @@ class drQ(widget_class, base_class):
         self.init_jobs_tabs()
         self.init_nodes_tabs()
         self.TW_job.repaint()
+        self.TW_node.repaint()
         self.setCursor(QtCore.Qt.ArrowCursor);
         
     def autorefresh(self,status):
@@ -116,7 +117,6 @@ class drQ(widget_class, base_class):
             node_tab.add(self.TW_node, i)
             self.nodes_tab_list.append(node_tab)
                       
-        
     def setup_about(self):
         url=QtCore.QUrl("about.html")
         self.WV_about.load(url)
