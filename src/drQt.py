@@ -12,7 +12,7 @@ ui_path=os.path.join(os.path.dirname(__file__),"ui","drQueueUi.ui")
 widget_class, base_class = uic.loadUiType(ui_path)
 
 
-class drQ(widget_class, base_class):
+class drQt(widget_class, base_class):
     def __init__(self,*args,**kwargs):
         super(drQ,self).__init__(*args,**kwargs)
         
@@ -139,7 +139,7 @@ class drQ(widget_class, base_class):
         
 def main():
     app = QtGui.QApplication(sys.argv)
-    dialog = drQ()    
+    dialog = drQt()    
     dialog.show()
     return app.exec_()
 
