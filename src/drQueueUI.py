@@ -21,7 +21,6 @@ class drQ(widget_class, base_class):
         except:
             raise "NO MASTER FOUND"
         
-        
         self.setupUi(self)
         self._timer_=core.Timer(parent=self)
         self.timer_interrupt=0
@@ -32,7 +31,7 @@ class drQ(widget_class, base_class):
         self.CB_auto_refresh.stateChanged.connect(self.autorefresh)
         
         #    catch the "done" signal from the thread and update the table
-        self.connect(self._timer_,QtCore.SIGNAL("done"),self.refresh)
+        self.connect(self._timer_,QtCore.SIGNAL("time_elapsed"),self.refresh)
         self.SB_refresh_time.setMinimum(1)
         self.SB_refresh_time.setValue(3)
         #    set the dialog as a standard window
@@ -54,6 +53,7 @@ class drQ(widget_class, base_class):
     def setup_nodes(self):
         self.TW_node.clear()
         node_properties=["Id","Enabled","Running","Name","Os","CPUs","Load Avg","Pools"]
+        
         self.TW_node.setColumnCount(len(node_properties))
         self.TW_node.setHorizontalHeaderLabels(node_properties) 
         

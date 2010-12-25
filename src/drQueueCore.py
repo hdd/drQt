@@ -22,7 +22,7 @@ class Timer(QtCore.QThread):
             for sec in range(self.runTime):
                 time.sleep(1.0)
                 counter -= 1
-            self.emit(QtCore.SIGNAL("done"))
+            self.emit(QtCore.SIGNAL("time_elapsed"))
 
 
 
@@ -80,12 +80,12 @@ class NodeDataTab(QtGui.QWidget):
         
         self._tab_os.setText("%s"%self.oss[drq_node_object.hwinfo.os])
         self._tab_cpus.setText("%d"%drq_node_object.hwinfo.ncpus)
-        
-        #self._tab_pools.setText("%s"%drq_node_object.limits.pool)
+                
         for column in self.columns:
             column.setContextMenuPolicy(QtCore.Qt.CustomContextMenu) 
             self.connect(column, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self.create_context)
-    
+            
+            
     def create_context(self,QPoint):
         detailsAct = QtGui.QAction("&Details",self)
         detailsAct.setToolTip("get details on the job")
@@ -175,12 +175,20 @@ class JobDataTab(QtGui.QWidget):
         self._tab_priority.setText("%d"%drq_job_object.priority)
         self._tab_pool.setText("%s"%drq_job_object.limits.pool)
         
-        self._tab_id.setToolTip("hey")
-
+        
+        html_tooltip=open("toolTips/job_info.html","r")
+        tooltipData ={}
+        tooltipData["job_Id"]=drq_job_object.id
+        tooltipData["job_Name"]=drq_job_object.name
+        tooltipData["job_Owner"]=drq_job_object.owner
+        
+        formattedTolltip=str(html_tooltip.read()).format(**tooltipData)
+        
         #    context
         for column in self.columns:
             column.setContextMenuPolicy(QtCore.Qt.CustomContextMenu) 
             self.connect(column, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self.create_context)
+            column.setToolTip(formattedTolltip)
 
     def create_context(self,QPoint):
         #print currentItem._tab_id
