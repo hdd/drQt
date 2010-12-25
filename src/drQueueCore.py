@@ -38,8 +38,8 @@ class NodeDataTab(QtGui.QWidget):
         
         self.oss=["windows","macOs","linux"]
   
-        self.icons.append(QtGui.QPixmap(os.path.join(self.current_path,"icons","stop.png")))
-        self.icons.append(QtGui.QPixmap(os.path.join(self.current_path,"icons","ok.png")))       
+        self.icons.append(QtGui.QPixmap(os.path.join(self.current_path,"ui","icons","stop.png")))
+        self.icons.append(QtGui.QPixmap(os.path.join(self.current_path,"ui","icons","ok.png")))       
         #node_properties=["Id","Enabled","Running","Name","Os","CPUs","Load Avg","Pools"]
         
         self._tab_id=QtGui.QLabel()
@@ -123,10 +123,10 @@ class JobDataTab(QtGui.QWidget):
         
         self.current_path = os.path.dirname(__file__)
         self.icons=[]       
-        self.icons.append(QtGui.QPixmap(os.path.join(self.current_path,"icons","running.png")))  
-        self.icons.append(QtGui.QPixmap(os.path.join(self.current_path,"icons","running.png")))  
-        self.icons.append(QtGui.QPixmap(os.path.join(self.current_path,"icons","stop.png")))
-        self.icons.append(QtGui.QPixmap(os.path.join(self.current_path,"icons","ok.png")))
+        self.icons.append(QtGui.QPixmap(os.path.join(self.current_path,"ui","icons","running.png")))  
+        self.icons.append(QtGui.QPixmap(os.path.join(self.current_path,"ui","icons","running.png")))  
+        self.icons.append(QtGui.QPixmap(os.path.join(self.current_path,"ui","icons","stop.png")))
+        self.icons.append(QtGui.QPixmap(os.path.join(self.current_path,"ui","icons","ok.png")))
         
         self._tab_id=QtGui.QLabel()
         self._tab_id.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
@@ -176,7 +176,7 @@ class JobDataTab(QtGui.QWidget):
         self._tab_pool.setText("%s"%drq_job_object.limits.pool)
         
         
-        html_tooltip=open("toolTips/job_info.html","r")
+        html_tooltip=open("ui/toolTips/job_info.html","r")
         tooltipData ={}
         tooltipData["job_Id"]=drq_job_object.id
         tooltipData["job_Name"]=drq_job_object.name

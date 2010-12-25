@@ -119,14 +119,14 @@ class drQ(widget_class, base_class):
             self.nodes_tab_list.append(node_tab)
                       
     def setup_about(self):
-        url=QtCore.QUrl("about.html")
+        url=QtCore.QUrl("ui/about.html")
         self.WV_about.load(url)
         
     def set_main_icons(self):
-        self.setWindowIcon(QtGui.QIcon("icons/main.svg"))
-        self.TW_main.setTabIcon(0,QtGui.QIcon("icons/job.svg"))
-        self.TW_main.setTabIcon(1,QtGui.QIcon("icons/nodes.svg"))        
-        self.TW_main.setTabIcon(2,QtGui.QIcon("icons/about.svg"))        
+        self.setWindowIcon(QtGui.QIcon("ui/icons/main.svg"))
+        self.TW_main.setTabIcon(0,QtGui.QIcon("ui/icons/job.svg"))
+        self.TW_main.setTabIcon(1,QtGui.QIcon("ui/icons/nodes.svg"))        
+        self.TW_main.setTabIcon(2,QtGui.QIcon("ui/icons/about.svg"))        
     
         
     def _get_all_jobs(self):
