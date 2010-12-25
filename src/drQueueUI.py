@@ -61,7 +61,10 @@ class drQ(widget_class, base_class):
         self.TW_node.setAlternatingRowColors(True)
         self.TW_node.setSelectionBehavior(QtGui.QTableView.SelectRows)
         self.TW_node.setSelectionMode(QtGui.QTableView.SingleSelection) 
-                       
+        
+        self.TW_node.setContextMenuPolicy(QtCore.Qt.CustomContextMenu) 
+        self.connect(self.TW_node, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self.create_node_context)
+                               
     def setup_jobs(self):
         #add a couple of jobs
         self.TW_job.clear()
@@ -73,9 +76,9 @@ class drQ(widget_class, base_class):
         self.TW_job.verticalHeader().hide()
         self.TW_job.setAlternatingRowColors(True)
         self.TW_job.setSelectionBehavior(QtGui.QTableView.SelectRows)
-        self.TW_job.setSelectionMode(QtGui.QTableView.SingleSelection)  
+        self.TW_job.setSelectionMode(QtGui.QTableView.SingleSelection)
+          
         self.TW_job.setContextMenuPolicy(QtCore.Qt.CustomContextMenu) 
-        
         self.connect(self.TW_job, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self.create_job_context)
         
     def refresh(self):
@@ -130,7 +133,20 @@ class drQ(widget_class, base_class):
         self.TW_main.setTabIcon(1,QtGui.QIcon("icons/nodes.svg"))        
         self.TW_main.setTabIcon(2,QtGui.QIcon("icons/about.svg"))        
 
-
+    
+    def create_node_context(self,QPoint):
+        detailsAct = QtGui.QAction("&Details",self)
+        detailsAct.setToolTip("get details on the job")
+        #self.connect(detailsAct, SIGNAL('triggered()'), self.on_details)
+        # Create a menu
+        menu = QtGui.QMenu("Menu", self) 
+        menu.addAction(detailsAct) 
+        menu.addSeparator()
+        menu.addAction("Enable")
+        menu.addAction("Disable") 
+        # Show the context menu in the mouse position 
+        menu.exec_(QtGui.QCursor.pos()) 
+    
     def create_job_context(self,QPoint):
         detailsAct = QtGui.QAction("&Details",self)
         detailsAct.setToolTip("get details on the job")
