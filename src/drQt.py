@@ -5,7 +5,7 @@ import PyQt4.QtGui as QtGui
 import PyQt4.QtCore as QtCore
 import PyQt4.uic as uic
 
-import drQueueCore as core
+import drQtLib as drQtLib
 import drqueue.base.libdrqueue as drqueue
 
 ui_path=os.path.join(os.path.dirname(__file__),"ui","drQueueUi.ui")
@@ -22,7 +22,7 @@ class drQ(widget_class, base_class):
             raise "NO MASTER FOUND"
         
         self.setupUi(self)
-        self._timer_=core.Timer(parent=self)
+        self._timer_=drQtLib.Timer(parent=self)
         self.timer_interrupt=0
         self.jobs_tab_list=[]
         self.nodes_tab_list=[]
@@ -103,7 +103,7 @@ class drQ(widget_class, base_class):
         self.TW_job.setRowCount(num_jobs)        
 
         for i in range(num_jobs):
-            job_tab = core.JobDataTab(jobs[i],parent=self.TW_job)
+            job_tab = drQtLib.JobDataTab(jobs[i],parent=self.TW_job)
             job_tab.add(self.TW_job, i)
             self.jobs_tab_list.append(job_tab)
         
@@ -114,7 +114,7 @@ class drQ(widget_class, base_class):
         num_nodes = len(nodes)
         self.TW_node.setRowCount(num_nodes)
         for i in range(num_nodes):
-            node_tab = core.NodeDataTab(nodes[i],parent=self.TW_node)
+            node_tab = drQtLib.NodeDataTab(nodes[i],parent=self.TW_node)
             node_tab.add(self.TW_node, i)
             self.nodes_tab_list.append(node_tab)
                       
