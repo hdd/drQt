@@ -44,27 +44,35 @@ class NodeDataTab(QtGui.QWidget):
         
         self._tab_id=QtGui.QLabel()
         self._tab_id.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter) 
+        self.columns.append(self._tab_id)
         
         self._tab_enabled=QtGui.QLabel()
         self._tab_enabled.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)                
-
+        self.columns.append(self._tab_enabled)
+        
         self._tab_running=QtGui.QLabel()
         self._tab_running.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)  
+        self.columns.append(self._tab_running)
                
         self._tab_name=QtGui.QLabel()
         self._tab_name.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
+        self.columns.append(self._tab_name)
         
         self._tab_os=QtGui.QLabel()
         self._tab_os.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
+        self.columns.append(self._tab_os)
 
         self._tab_cpus=QtGui.QLabel()
         self._tab_cpus.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
+        self.columns.append(self._tab_cpus)
         
         self._tab_loadavg=QtGui.QLabel()
         self._tab_loadavg.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
+        self.columns.append(self._tab_loadavg)
         
         self._tab_pools=QtGui.QLabel()
         self._tab_pools.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
+        self.columns.append(self._tab_pools)
         
         self._tab_id.setText("%d"%drq_node_object.hwinfo.id)
         self._tab_name.setText("%s"%drq_node_object.hwinfo.name)
@@ -72,8 +80,28 @@ class NodeDataTab(QtGui.QWidget):
         
         self._tab_os.setText("%s"%self.oss[drq_node_object.hwinfo.os])
         self._tab_cpus.setText("%d"%drq_node_object.hwinfo.ncpus)
-        #self._tab_pools.setText("%s"%drq_node_object.limits.pool)
         
+        #self._tab_pools.setText("%s"%drq_node_object.limits.pool)
+        for column in self.columns:
+            column.setContextMenuPolicy(QtCore.Qt.CustomContextMenu) 
+            self.connect(column, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self.create_context)
+    
+    def create_context(self,QPoint):
+        detailsAct = QtGui.QAction("&Details",self)
+        detailsAct.setToolTip("get details on the job")
+        #self.connect(detailsAct, SIGNAL('triggered()'), self.on_details)
+        # Create a menu
+        menu = QtGui.QMenu("Menu", self) 
+        menu.addAction(detailsAct) 
+        menu.addSeparator()
+        menu.addAction("Enable")
+        menu.addAction("Disable") 
+        # Show the context menu in the mouse position 
+        menu.exec_(QtGui.QCursor.pos())           
+
+    def _emit_details(self):
+        self.emit(QtCore.SIGNAL("job_details(QVariant)"), QtCore.QVariant(self.drq_node_object))   
+                        
     def add(self,table,index):
             table.setCellWidget(index,0,self._tab_id)
             table.setCellWidget(index,1,self._tab_enabled)
@@ -83,7 +111,8 @@ class NodeDataTab(QtGui.QWidget):
             table.setCellWidget(index,5,self._tab_cpus) 
             table.setCellWidget(index,6,self._tab_loadavg) 
             table.setCellWidget(index,7,self._tab_pools)         
-                        
+      
+                 
 class JobDataTab(QtGui.QWidget):
     
     def __init__(self,drq_job_object=None,parent=None):
@@ -101,27 +130,35 @@ class JobDataTab(QtGui.QWidget):
         
         self._tab_id=QtGui.QLabel()
         self._tab_id.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
+        self.columns.append(self._tab_id)
         
         self._tab_name=QtGui.QLabel()
         self._tab_name.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
+        self.columns.append(self._tab_name)
         
         self._tab_owner=QtGui.QLabel()
         self._tab_owner.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
+        self.columns.append(self._tab_owner)
         
         self._tab_status=QtGui.QLabel()
         self._tab_status.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
-
+        self.columns.append(self._tab_status)
+        
         self._tab_procs=QtGui.QLabel()
         self._tab_procs.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
+        self.columns.append(self._tab_procs)
         
         self._tab_priority=QtGui.QLabel()
         self._tab_priority.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
+        self.columns.append(self._tab_priority)
 
         self._tab_pool=QtGui.QLabel()
         self._tab_pool.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
+        self.columns.append(self._tab_pool)
         
         self._tab_est_time=QtGui.QLabel()
         self._tab_est_time.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
+        self.columns.append(self._tab_est_time)
         
         """
             set values from drQ job instance
@@ -139,7 +176,58 @@ class JobDataTab(QtGui.QWidget):
         self._tab_pool.setText("%s"%drq_job_object.limits.pool)
         
         self._tab_id.setToolTip("hey")
+
+        #    context
+        for column in self.columns:
+            column.setContextMenuPolicy(QtCore.Qt.CustomContextMenu) 
+            self.connect(column, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self.create_context)
+
+    def create_context(self,QPoint):
+        #print currentItem._tab_id
         
+        detailsAct = QtGui.QAction("&Details",self)
+        detailsAct.setToolTip("get details on the job")
+
+        newAct =QtGui.QAction("&New Job",self)
+        newAct.setToolTip("createa new job")
+                
+        copyAct = QtGui.QAction("&Copy Job",self)
+        copyAct.setToolTip("copy the job")
+        
+        rerunAct = QtGui.QAction("&Re Run",self)
+        rerunAct.setToolTip("Re run the job")
+
+        stopAct = QtGui.QAction("&Stop",self)
+        stopAct.setToolTip("stop the running job")
+                
+        hstopAct = QtGui.QAction("&Hard Stop",self)
+        hstopAct.setToolTip("hard stop the running job")
+
+        continueAct = QtGui.QAction("&Continue",self)
+        continueAct.setToolTip("Continue the stop job")
+        
+        deleteAct = QtGui.QAction("D&elete",self)
+        deleteAct.setToolTip("delete the job")
+        
+        # Create a menu
+        menu = QtGui.QMenu("Menu", self) 
+        menu.addAction(detailsAct) 
+        menu.addSeparator()
+        menu.addAction(newAct)
+        menu.addAction(copyAct) 
+        menu.addSeparator()
+        menu.addAction(rerunAct)
+        menu.addAction(stopAct) 
+        menu.addAction(hstopAct)
+        menu.addAction(continueAct) 
+        menu.addAction("Delete")
+        
+        # Show the context menu in the mouse position 
+        menu.exec_(QtGui.QCursor.pos())   
+        
+    def _emit_details(self):
+        self.emit(QtCore.SIGNAL("job_details(QVariant)"), QtCore.QVariant(self._drq_job_object))       
+                
     def add(self,table,index):
             table.setCellWidget(index,0,self._tab_id)
             table.setCellWidget(index,1,self._tab_name)
