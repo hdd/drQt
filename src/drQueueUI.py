@@ -73,7 +73,10 @@ class drQ(widget_class, base_class):
         self.TW_job.verticalHeader().hide()
         self.TW_job.setAlternatingRowColors(True)
         self.TW_job.setSelectionBehavior(QtGui.QTableView.SelectRows)
-        self.TW_job.setSelectionMode(QtGui.QTableView.SingleSelection)
+        self.TW_job.setSelectionMode(QtGui.QTableView.SingleSelection)  
+        self.TW_job.setContextMenuPolicy(QtCore.Qt.CustomContextMenu) 
+        
+        self.connect(self.TW_job, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self.create_job_context)
         
     def refresh(self):
         self.setCursor(QtCore.Qt.WaitCursor);
@@ -127,6 +130,56 @@ class drQ(widget_class, base_class):
         self.TW_main.setTabIcon(1,QtGui.QIcon("icons/nodes.svg"))        
         self.TW_main.setTabIcon(2,QtGui.QIcon("icons/about.svg"))        
 
+
+    def create_job_context(self,QPoint):
+        detailsAct = QtGui.QAction("&Details",self)
+        detailsAct.setToolTip("get details on the job")
+        #self.connect(detailsAct, QtCore.SIGNAL('triggered()'), self.on_details)
+
+        newAct =QtGui.QAction("&New Job",self)
+        newAct.setToolTip("createa new job")
+        #self.connect(newAct, QtCore.SIGNAL('triggered()'), self.on_new)
+                
+        copyAct = QtGui.QAction("&Copy Job",self)
+        copyAct.setToolTip("copy the job")
+        #self.connect(copyAct, QtCore.SIGNAL('triggered()'), self.on_copy)    
+        
+        rerunAct = QtGui.QAction("&Re Run",self)
+        rerunAct.setToolTip("Re run the job")
+        #self.connect(copyAct, QtCore.SIGNAL('triggered()'), self.on_rerun)        
+
+        stopAct = QtGui.QAction("&Stop",self)
+        stopAct.setToolTip("stop the running job")
+        #self.connect(stopAct, QtCore.SIGNAL('triggered()'), self.on_stop)        
+                
+        hstopAct = QtGui.QAction("&Hard Stop",self)
+        hstopAct.setToolTip("hard stop the running job")
+        #self.connect(hstopAct, QtCore.SIGNAL('triggered()'), self.on_hstop)                        
+
+        continueAct = QtGui.QAction("&Continue",self)
+        continueAct.setToolTip("Continue the stop job")
+        #self.connect(continueAct, QtCore.SIGNAL('triggered()'), self.on_continue)    
+        
+        deleteAct = QtGui.QAction("D&elete",self)
+        deleteAct.setToolTip("delete the job")
+        #self.connect(deleteAct, QtCore.SIGNAL('triggered()'), self.on_delete)    
+        
+        # Create a menu
+        menu = QtGui.QMenu("Menu", self) 
+        menu.addAction(detailsAct) 
+        menu.addSeparator()
+        menu.addAction(newAct)
+        menu.addAction(copyAct) 
+        menu.addSeparator()
+        menu.addAction(rerunAct)
+        menu.addAction(stopAct) 
+        menu.addAction(hstopAct)
+        menu.addAction(continueAct) 
+        menu.addAction("Delete")
+        
+        # Show the context menu in the mouse position 
+        menu.exec_(QtGui.QCursor.pos()) 
+        
     def _get_all_jobs(self):
         job_list = drqueue.request_job_list(drqueue.CLIENT)
         return job_list
