@@ -8,7 +8,7 @@ import PyQt4.uic as uic
 import drQtLib as drQtLib
 import drqueue.base.libdrqueue as drqueue
 
-ui_path=os.path.join(os.path.dirname(__file__),"ui","drQueueUi.ui")
+ui_path=os.path.join(os.path.dirname(__file__),"ui","drQt.ui")
 widget_class, base_class = uic.loadUiType(ui_path)
 
 
