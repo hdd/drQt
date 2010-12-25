@@ -14,7 +14,7 @@ widget_class, base_class = uic.loadUiType(ui_path)
 
 class drQt(widget_class, base_class):
     def __init__(self,*args,**kwargs):
-        super(drQ,self).__init__(*args,**kwargs)
+        super(drQt,self).__init__(*args,**kwargs)
         
         try:
             drqueue.request_job_list(drqueue.CLIENT)
