@@ -6,6 +6,11 @@ import time
 from PyQt4 import QtCore
 from PyQt4 import QtGui
 
+current_path = os.path.dirname(__file__)
+tooltips_path= os.path.join(current_path,"ui","tooltips")
+icons_path = os.path.join(current_path,"ui","icons")
+
+
 class Timer(QtCore.QThread):
     def __init__(self,parent=None):
         super(Timer,self).__init__(parent=parent)
@@ -33,13 +38,12 @@ class NodeDataTab(QtGui.QWidget):
                  
         self.columns=[] 
                
-        self.current_path = os.path.dirname(__file__)
         self.icons=[]       
         
         self.oss=["windows","macOs","linux"]
   
-        self.icons.append(QtGui.QPixmap(os.path.join(self.current_path,"ui","icons","stop.png")))
-        self.icons.append(QtGui.QPixmap(os.path.join(self.current_path,"ui","icons","ok.png")))       
+        self.icons.append(QtGui.QPixmap(os.path.join(icons_path,"stop.png")))
+        self.icons.append(QtGui.QPixmap(os.path.join(icons_path,"ok.png")))       
         #node_properties=["Id","Enabled","Running","Name","Os","CPUs","Load Avg","Pools"]
         
         self._tab_id=QtGui.QLabel()
@@ -102,7 +106,7 @@ class NodeDataTab(QtGui.QWidget):
     def _emit_details(self):
         self.emit(QtCore.SIGNAL("job_details(QVariant)"), QtCore.QVariant(self.drq_node_object))   
                         
-    def add(self,table,index):
+    def add_to_table(self,table,index):
             table.setCellWidget(index,0,self._tab_id)
             table.setCellWidget(index,1,self._tab_enabled)
             table.setCellWidget(index,2,self._tab_running)
@@ -117,16 +121,15 @@ class JobDataTab(QtGui.QWidget):
     
     def __init__(self,drq_job_object=None,parent=None):
         super(JobDataTab,self).__init__(parent=parent)
-        self._drq_job_object=drq_job_object
+        self._drq_job_object = drq_job_object
                 
         self.columns=[]        
-        
-        self.current_path = os.path.dirname(__file__)
-        self.icons=[]       
-        self.icons.append(QtGui.QPixmap(os.path.join(self.current_path,"ui","icons","running.png")))  
-        self.icons.append(QtGui.QPixmap(os.path.join(self.current_path,"ui","icons","running.png")))  
-        self.icons.append(QtGui.QPixmap(os.path.join(self.current_path,"ui","icons","stop.png")))
-        self.icons.append(QtGui.QPixmap(os.path.join(self.current_path,"ui","icons","ok.png")))
+        self.icons=[]      
+         
+        self.icons.append(QtGui.QPixmap(os.path.join(icons_path,"running.png")))  
+        self.icons.append(QtGui.QPixmap(os.path.join(icons_path,"running.png")))  
+        self.icons.append(QtGui.QPixmap(os.path.join(icons_path,"stop.png")))
+        self.icons.append(QtGui.QPixmap(os.path.join(icons_path,"ok.png")))
         
         self._tab_id=QtGui.QLabel()
         self._tab_id.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
@@ -160,42 +163,41 @@ class JobDataTab(QtGui.QWidget):
         self._tab_est_time.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
         self.columns.append(self._tab_est_time)
         
-        """
-            set values from drQ job instance
-        """
         
-        self._tab_id.setText("%s"%drq_job_object.id)        
-        self._tab_name.setText("%s"%drq_job_object.name)
-        self._tab_owner.setText("%s"%drq_job_object.owner)
-        self._tab_status.setPixmap( self.icons[drq_job_object.status].scaled(25,25))
-        self._tab_procs.setText("%d"%drq_job_object.nprocs)
+        self.set_values()
+        self.set_context()
+        self.set_tooltips()
+    
+    def set_values(self):        
+        self._tab_id.setText("%s"%self._drq_job_object.id)        
+        self._tab_name.setText("%s"%self._drq_job_object.name)
+        self._tab_owner.setText("%s"%self._drq_job_object.owner)
+        self._tab_status.setPixmap( self.icons[self._drq_job_object.status].scaled(25,25))
+        self._tab_procs.setText("%d"%self._drq_job_object.nprocs)
         
-        self._tab_est_time.setText("%d"%drq_job_object.fdone)
+        self._tab_est_time.setText("%d"%self._drq_job_object.fdone)
         
-        self._tab_priority.setText("%d"%drq_job_object.priority)
-        self._tab_pool.setText("%s"%drq_job_object.limits.pool)
-        
-        
-        html_tooltip=open("ui/toolTips/job_info.html","r")
-        tooltipData ={}
-        tooltipData["job_Id"]=drq_job_object.id
-        tooltipData["job_Name"]=drq_job_object.name
-        tooltipData["job_Owner"]=drq_job_object.owner
-        
-        formattedTolltip=str(html_tooltip.read()).format(**tooltipData)
-        
-        #    context
+        self._tab_priority.setText("%d"%self._drq_job_object.priority)
+        self._tab_pool.setText("%s"%self._drq_job_object.limits.pool)
+            
+    def set_context(self):
         for column in self.columns:
             column.setContextMenuPolicy(QtCore.Qt.CustomContextMenu) 
             self.connect(column, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self.create_context)
+                        
+    def set_tooltips(self):
+        html_tooltip=open(os.path.join(tooltips_path,"job_info.html"),"r")
+        tooltipData ={}
+        tooltipData["job_Id"]=self._drq_job_object.id
+        tooltipData["job_Name"]=self._drq_job_object.name
+        tooltipData["job_Owner"]=self._drq_job_object.owner
+        
+        formattedTolltip=str(html_tooltip.read()).format(**tooltipData)
+        for column in self.columns:
             column.setToolTip(formattedTolltip)
-
+            
     def create_context(self,QPoint):
         #print currentItem._tab_id
-        
-        detailsAct = QtGui.QAction("&Details",self)
-        detailsAct.setToolTip("get details on the job")
-
         newAct =QtGui.QAction("&New Job",self)
         newAct.setToolTip("createa new job")
                 
@@ -218,9 +220,7 @@ class JobDataTab(QtGui.QWidget):
         deleteAct.setToolTip("delete the job")
         
         # Create a menu
-        menu = QtGui.QMenu("Menu", self) 
-        menu.addAction(detailsAct) 
-        menu.addSeparator()
+        menu = QtGui.QMenu("Menu", self)
         menu.addAction(newAct)
         menu.addAction(copyAct) 
         menu.addSeparator()
@@ -236,7 +236,7 @@ class JobDataTab(QtGui.QWidget):
     def _emit_details(self):
         self.emit(QtCore.SIGNAL("job_details(QVariant)"), QtCore.QVariant(self._drq_job_object))       
                 
-    def add(self,table,index):
+    def add_to_table(self,table,index):
             table.setCellWidget(index,0,self._tab_id)
             table.setCellWidget(index,1,self._tab_name)
             table.setCellWidget(index,2,self._tab_owner)

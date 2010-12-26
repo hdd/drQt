@@ -104,7 +104,7 @@ class drQt(widget_class, base_class):
 
         for i in range(num_jobs):
             job_tab = drQtLib.JobDataTab(jobs[i],parent=self.TW_job)
-            job_tab.add(self.TW_job, i)
+            job_tab.add_to_table(self.TW_job, i)
             self.jobs_tab_list.append(job_tab)
         
     def init_nodes_tabs(self):
@@ -115,7 +115,7 @@ class drQt(widget_class, base_class):
         self.TW_node.setRowCount(num_nodes)
         for i in range(num_nodes):
             node_tab = drQtLib.NodeDataTab(nodes[i],parent=self.TW_node)
-            node_tab.add(self.TW_node, i)
+            node_tab.add_to_table(self.TW_node, i)
             self.nodes_tab_list.append(node_tab)
                       
     def setup_about(self):
