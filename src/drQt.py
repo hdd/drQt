@@ -1,5 +1,6 @@
 import sys
 import os
+import logging
 
 import PyQt4.QtGui as QtGui
 import PyQt4.QtCore as QtCore
@@ -8,11 +9,19 @@ import PyQt4.uic as uic
 import drQtLib as drQtLib
 import drqueue.base.libdrqueue as drqueue
 
-ui_path=os.path.join(os.path.dirname(__file__),"ui","drQt.ui")
+
+current_path = os.path.dirname(__file__)
+icons_path = os.path.join(current_path,"ui","icons")
+
+ui_path=os.path.join(current_path,"ui","drQt.ui")
 widget_class, base_class = uic.loadUiType(ui_path)
 
 
 class drQt(widget_class, base_class):
+    
+    node_properties=["Id","Enabled","Running","Name","Os","CPUs","Load Avg","Pools"]
+    job_properties=["Id","Name","Owner","Status","Process","Left","Done","Priority","Pool"]
+    
     def __init__(self,*args,**kwargs):
         super(drQt,self).__init__(*args,**kwargs)
         
@@ -26,6 +35,8 @@ class drQt(widget_class, base_class):
         self.timer_interrupt=0
         self.jobs_tab_list=[]
         self.nodes_tab_list=[]
+        self._selected_job_row= None
+        
         self.setup_main()
         self.PB_refresh.clicked.connect(self.refresh)
         self.CB_auto_refresh.stateChanged.connect(self.autorefresh)
@@ -40,6 +51,12 @@ class drQt(widget_class, base_class):
                             QtCore.Qt.WindowCloseButtonHint | 
                             QtCore.Qt.WindowMaximizeButtonHint)        
         
+        self.connect(self.TW_job,QtCore.SIGNAL("cellClicked(int,int)"),self.store_selected_job)
+        
+        
+    def store_selected_job(self,row,column):
+        self._selected_job_row = row
+        
     def setup_main(self):
         self.setWindowTitle("DrQueue Manager")
         self.set_main_icons()
@@ -52,10 +69,9 @@ class drQt(widget_class, base_class):
         
     def setup_nodes(self):
         self.TW_node.clear()
-        node_properties=["Id","Enabled","Running","Name","Os","CPUs","Load Avg","Pools"]
         
-        self.TW_node.setColumnCount(len(node_properties))
-        self.TW_node.setHorizontalHeaderLabels(node_properties) 
+        self.TW_node.setColumnCount(len(self.node_properties))
+        self.TW_node.setHorizontalHeaderLabels(self.node_properties) 
         
         self.TW_node.verticalHeader().hide()
         self.TW_node.setAlternatingRowColors(True)
@@ -65,10 +81,9 @@ class drQt(widget_class, base_class):
     def setup_jobs(self):
         #add a couple of jobs
         self.TW_job.clear()
-        job_properties=["Id","Name","Owner","Status","Process","Left","Done","Priority","Pool"]
 
-        self.TW_job.setColumnCount(len(job_properties))
-        self.TW_job.setHorizontalHeaderLabels(job_properties) 
+        self.TW_job.setColumnCount(len(self.job_properties))
+        self.TW_job.setHorizontalHeaderLabels(self.job_properties) 
 
         self.TW_job.verticalHeader().hide()
         self.TW_job.setAlternatingRowColors(True)
@@ -82,6 +97,7 @@ class drQt(widget_class, base_class):
         self.init_nodes_tabs()
         self.TW_job.repaint()
         self.TW_node.repaint()
+        self.TW_job.setCurrentCell(self._selected_job_row,0)
         self.setCursor(QtCore.Qt.ArrowCursor);
         
     def autorefresh(self,status):
@@ -103,7 +119,7 @@ class drQt(widget_class, base_class):
         self.TW_job.setRowCount(num_jobs)        
 
         for i in range(num_jobs):
-            job_tab = drQtLib.JobDataTab(jobs[i],parent=self.TW_job)
+            job_tab = drQtLib.JobTab(jobs[i],parent=self.TW_job)
             job_tab.add_to_table(self.TW_job, i)
             self.jobs_tab_list.append(job_tab)
         
@@ -114,7 +130,7 @@ class drQt(widget_class, base_class):
         num_nodes = len(nodes)
         self.TW_node.setRowCount(num_nodes)
         for i in range(num_nodes):
-            node_tab = drQtLib.NodeDataTab(nodes[i],parent=self.TW_node)
+            node_tab = drQtLib.NodeTab(nodes[i],parent=self.TW_node)
             node_tab.add_to_table(self.TW_node, i)
             self.nodes_tab_list.append(node_tab)
                       
@@ -123,10 +139,10 @@ class drQt(widget_class, base_class):
         self.WV_about.load(url)
         
     def set_main_icons(self):
-        self.setWindowIcon(QtGui.QIcon("ui/icons/main.svg"))
-        self.TW_main.setTabIcon(0,QtGui.QIcon("ui/icons/job.svg"))
-        self.TW_main.setTabIcon(1,QtGui.QIcon("ui/icons/nodes.svg"))        
-        self.TW_main.setTabIcon(2,QtGui.QIcon("ui/icons/about.svg"))        
+        self.setWindowIcon(QtGui.QIcon(os.path.join(icons_path,"main.svg")))
+        self.TW_main.setTabIcon(0,QtGui.QIcon(os.path.join(icons_path,"job.svg")))
+        self.TW_main.setTabIcon(1,QtGui.QIcon(os.path.join(icons_path,"nodes.svg")))        
+        self.TW_main.setTabIcon(2,QtGui.QIcon(os.path.join(icons_path,"about.svg")))        
     
         
     def _get_all_jobs(self):
