@@ -66,10 +66,10 @@ class drQt(widget_class, base_class):
         self.setup_jobs()
         self.init_jobs_tabs()
         
-        self.setup_nodes()
-        self.init_nodes_tabs()
+        self.setup_slaves()
+        self.init_slaves_tabs()
         
-    def setup_nodes(self):
+    def setup_slaves(self):
         self.TW_node.clear()
         
         self.TW_node.setColumnCount(len(self.node_properties))
@@ -92,7 +92,6 @@ class drQt(widget_class, base_class):
         self.TW_job.setSelectionBehavior(QtGui.QTableView.SelectRows)
         self.TW_job.setSelectionMode(QtGui.QTableView.SingleSelection)
 
-        
     def refresh(self):
         self.setCursor(QtCore.Qt.WaitCursor);
         self.init_jobs_tabs()
@@ -129,7 +128,7 @@ class drQt(widget_class, base_class):
             job_tab.add_to_table(self.TW_job, i)
             self.jobs_tab_list.append(job_tab)
         
-    def init_nodes_tabs(self):
+    def init_slaves_tabs(self):
         self.nodes_tab_list=[]
         log.debug("building nodes tabs...")
         nodes=self._get_all_nodes()
@@ -147,8 +146,8 @@ class drQt(widget_class, base_class):
     def set_main_icons(self):
         self.setWindowIcon(QtGui.QIcon(os.path.join(icons_path,"main.svg")))
         self.TW_main.setTabIcon(0,QtGui.QIcon(os.path.join(icons_path,"job.svg")))
-        self.TW_main.setTabIcon(1,QtGui.QIcon(os.path.join(icons_path,"nodes.svg")))        
-        self.TW_main.setTabIcon(2,QtGui.QIcon(os.path.join(icons_path,"about.svg")))        
+        self.TW_main.setTabIcon(2,QtGui.QIcon(os.path.join(icons_path,"nodes.svg")))        
+        self.TW_main.setTabIcon(3,QtGui.QIcon(os.path.join(icons_path,"about.svg")))        
         
     def _get_all_jobs(self):
         job_list = drqueue.request_job_list(drqueue.CLIENT)

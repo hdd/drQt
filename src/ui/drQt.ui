@@ -38,7 +38,7 @@
          </sizepolicy>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="QW_job">
          <attribute name="title">
@@ -80,7 +80,7 @@
         </widget>
         <widget class="QWidget" name="QW_node">
          <attribute name="title">
-          <string>Nodes</string>
+          <string>Slaves</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_2">
           <item row="0" column="0">
