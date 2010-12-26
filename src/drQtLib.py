@@ -156,7 +156,10 @@ class JobTab(QtGui.QWidget):
         
         deleteAct = QtGui.QAction("D&elete",self)
         deleteAct.setToolTip("delete the job")
-        
+
+        nodedAct = QtGui.QAction("Node V&iew",self)
+        nodedAct.setToolTip("view job dependencies")    
+            
         # Create a menu
         menu = QtGui.QMenu("Menu", self)
         menu.addAction(newAct)
@@ -165,8 +168,10 @@ class JobTab(QtGui.QWidget):
         menu.addAction(rerunAct)
         menu.addAction(stopAct) 
         menu.addAction(hstopAct)
-        menu.addAction(continueAct) 
-        menu.addAction("Delete")
+        menu.addAction(deleteAct)
+        menu.addSeparator()
+        menu.addAction(nodedAct) 
+
         
         # Show the context menu in the mouse position 
         menu.exec_(QtGui.QCursor.pos())         
@@ -187,6 +192,11 @@ class JobTab(QtGui.QWidget):
         
 
 class NodeTab(QtGui.QWidget):
+    
+    proc_types=["Unknown","Intel (not listed)","Pentium","Pentium II","Pentium III","Pentium 4","Xeon","IA-64","Pentium M","Athlon","Opteron","R5000","R10000","R12000","PPC","Ultrasparc"]
+    archs=["Unknown","Intel","Mips","PowerPC","Sparc"]
+    oss=["Unknown","Irix","Linux","Windows","Mac OsX","Free BSD"]
+    
     def __init__(self,drq_node_object=None,parent=None):
         super(NodeTab,self).__init__(parent=parent)
         self._drq_node_object=drq_node_object
@@ -194,8 +204,7 @@ class NodeTab(QtGui.QWidget):
         self.columns=[] 
                
         self.icons=[]       
-        
-        self.oss=["Irix","OsX","Linux","Windows"]
+
   
         self.icons.append(QtGui.QPixmap(os.path.join(icons_path,"stop.png")))
         self.icons.append(QtGui.QPixmap(os.path.join(icons_path,"ok.png")))       
@@ -254,14 +263,14 @@ class NodeTab(QtGui.QWidget):
         html_tooltip=open(os.path.join(tooltips_path,"node_info.html"),"r")
         tooltipData ={}
         tooltipData["id"]=self._drq_node_object.hwinfo.id
-        tooltipData["arch"]=self._drq_node_object.hwinfo.arch
+        tooltipData["arch"]=self.archs[self._drq_node_object.hwinfo.arch]
         tooltipData["memory"]=self._drq_node_object.hwinfo.memory
         tooltipData["name"]=self._drq_node_object.hwinfo.name
         tooltipData["ncpus"]=self._drq_node_object.hwinfo.ncpus
         tooltipData["nnbits"]=self._drq_node_object.hwinfo.nnbits
         tooltipData["os"]=self.oss[self._drq_node_object.hwinfo.os]
         tooltipData["procspeed"]=self._drq_node_object.hwinfo.procspeed
-        tooltipData["proctype"]=self._drq_node_object.hwinfo.proctype
+        tooltipData["proctype"]=self.proc_types[self._drq_node_object.hwinfo.proctype]
         tooltipData["speedindex"]=self._drq_node_object.hwinfo.speedindex
         
         formattedTolltip=str(html_tooltip.read()).format(**tooltipData)
