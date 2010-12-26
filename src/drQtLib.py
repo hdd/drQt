@@ -11,6 +11,8 @@ log.setLevel(logging.DEBUG)
 from PyQt4 import QtCore
 from PyQt4 import QtGui
 
+import drqueue.base.libdrqueue as drqueue
+
 current_path = os.path.dirname(__file__)
 tooltips_path= os.path.join(current_path,"ui","tooltips")
 icons_path = os.path.join(current_path,"ui","icons")
@@ -154,10 +156,11 @@ class JobTab(QtGui.QWidget):
         continueAct = QtGui.QAction("&Continue",self)
         continueAct.setToolTip("Continue the stop job")
         
-        deleteAct = QtGui.QAction("D&elete",self)
+        deleteAct = QtGui.QAction("&Delete",self)
         deleteAct.setToolTip("delete the job")
 
-        nodedAct = QtGui.QAction("Node V&iew",self)
+
+        nodedAct = QtGui.QAction("Node &View",self)
         nodedAct.setToolTip("view job dependencies")    
             
         # Create a menu
@@ -171,10 +174,11 @@ class JobTab(QtGui.QWidget):
         menu.addAction(deleteAct)
         menu.addSeparator()
         menu.addAction(nodedAct) 
-
-        
         # Show the context menu in the mouse position 
         menu.exec_(QtGui.QCursor.pos())         
+                
+    def delete_job(self):
+        self._drq_job_object.delete()
                 
     def add_to_table(self,table,index):
         """
@@ -192,10 +196,6 @@ class JobTab(QtGui.QWidget):
         
 
 class NodeTab(QtGui.QWidget):
-    
-    proc_types=["Unknown","Intel (not listed)","Pentium","Pentium II","Pentium III","Pentium 4","Xeon","IA-64","Pentium M","Athlon","Opteron","R5000","R10000","R12000","PPC","Ultrasparc"]
-    archs=["Unknown","Intel","Mips","PowerPC","Sparc"]
-    oss=["Unknown","Irix","Linux","Windows","Mac OsX","Free BSD"]
     
     def __init__(self,drq_node_object=None,parent=None):
         super(NodeTab,self).__init__(parent=parent)
@@ -251,7 +251,7 @@ class NodeTab(QtGui.QWidget):
         self._tab_name.setText("%s"%self._drq_node_object.hwinfo.name)
         self._tab_enabled.setPixmap( self.icons[self._drq_node_object.limits.enabled].scaled(25,25))
         
-        self._tab_os.setText("%s"%self.oss[self._drq_node_object.hwinfo.os])
+        self._tab_os.setText("%s"%drqueue.osstring(self._drq_node_object.hwinfo.os))
         self._tab_cpus.setText("%d"%self._drq_node_object.hwinfo.ncpus)
                 
     def _set_context(self):
@@ -263,14 +263,14 @@ class NodeTab(QtGui.QWidget):
         html_tooltip=open(os.path.join(tooltips_path,"node_info.html"),"r")
         tooltipData ={}
         tooltipData["id"]=self._drq_node_object.hwinfo.id
-        tooltipData["arch"]=self.archs[self._drq_node_object.hwinfo.arch]
+        tooltipData["arch"]=drqueue.archstring(self._drq_node_object.hwinfo.arch)
         tooltipData["memory"]=self._drq_node_object.hwinfo.memory
         tooltipData["name"]=self._drq_node_object.hwinfo.name
         tooltipData["ncpus"]=self._drq_node_object.hwinfo.ncpus
-        tooltipData["nnbits"]=self._drq_node_object.hwinfo.nnbits
-        tooltipData["os"]=self.oss[self._drq_node_object.hwinfo.os]
+        tooltipData["nnbits"]=drqueue.bitsstring(self._drq_node_object.hwinfo.nnbits)
+        tooltipData["os"]=drqueue.osstring(self._drq_node_object.hwinfo.os)
         tooltipData["procspeed"]=self._drq_node_object.hwinfo.procspeed
-        tooltipData["proctype"]=self.proc_types[self._drq_node_object.hwinfo.proctype]
+        tooltipData["proctype"]=drqueue.proctypestring(self._drq_node_object.hwinfo.proctype)
         tooltipData["speedindex"]=self._drq_node_object.hwinfo.speedindex
         
         formattedTolltip=str(html_tooltip.read()).format(**tooltipData)
