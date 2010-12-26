@@ -2,7 +2,12 @@ import sys
 import os
 
 import time
-    
+import logging
+
+logging.basicConfig()
+log = logging.getLogger("drQtLib")
+log.setLevel(logging.DEBUG)
+
 from PyQt4 import QtCore
 from PyQt4 import QtGui
 

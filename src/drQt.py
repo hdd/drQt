@@ -10,6 +10,10 @@ import drQtLib as drQtLib
 import drqueue.base.libdrqueue as drqueue
 
 
+logging.basicConfig()
+log = logging.getLogger("drQt")
+log.setLevel(logging.DEBUG)
+
 current_path = os.path.dirname(__file__)
 icons_path = os.path.join(current_path,"ui","icons")
 
@@ -102,17 +106,17 @@ class drQt(widget_class, base_class):
         
     def autorefresh(self,status):
         if status:
-            print "autorefresh:ON"
+            log.debug("autorefresh:ON")
             refresh_time=self.SB_refresh_time.value()
             self._timer_.set_run_time(refresh_time)
             self._timer_.start()
         else:
-            print "autorefresh:OFF"
+            log.debug("autorefresh:OFF")
             self._timer_.terminate()
 
     def init_jobs_tabs(self):
         self.jobs_tab_list=[]
-        print "building job tabs..."
+        log.debug("building job tabs...")
         self.TW_job.clearContents()
         jobs=self._get_all_jobs()
         num_jobs = len(jobs)
@@ -125,7 +129,7 @@ class drQt(widget_class, base_class):
         
     def init_nodes_tabs(self):
         self.nodes_tab_list=[]
-        print "building nodes tabs..."
+        log.debug("building nodes tabs...")
         nodes=self._get_all_nodes()
         num_nodes = len(nodes)
         self.TW_node.setRowCount(num_nodes)
