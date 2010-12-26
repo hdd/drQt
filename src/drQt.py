@@ -4,21 +4,21 @@ import logging
 
 import PyQt4.QtGui as QtGui
 import PyQt4.QtCore as QtCore
-import PyQt4.uic as uic
 
-import drQtLib as drQtLib
 import drqueue.base.libdrqueue as drqueue
+
+
+from lib.slaveTab import SlaveNodeTab
+from lib.jobTab import JobTab
+from lib.utils import Timer
+
+from lib.utils import widget_class
+from lib.utils import base_class
+from lib.utils import icons_path
 
 logging.basicConfig()
 log = logging.getLogger("drQt")
 log.setLevel(logging.DEBUG)
-
-current_path = os.path.dirname(__file__)
-icons_path = os.path.join(current_path,"ui","icons")
-
-ui_path=os.path.join(current_path,"ui","drQt.ui")
-widget_class, base_class = uic.loadUiType(ui_path)
-
 
 class drQt(widget_class, base_class):
     
@@ -34,7 +34,7 @@ class drQt(widget_class, base_class):
             raise "NO MASTER FOUND"
         
         self.setupUi(self)
-        self._timer_=drQtLib.Timer(parent=self)
+        self._timer_=Timer(parent=self)
         self.timer_interrupt=0
         self.jobs_tab_list=[]
         self.nodes_tab_list=[]
@@ -95,7 +95,8 @@ class drQt(widget_class, base_class):
     def refresh(self):
         self.setCursor(QtCore.Qt.WaitCursor);
         self.init_jobs_tabs()
-        self.init_nodes_tabs()
+        self.init_slaves_tabs()
+        
         self.TW_job.repaint()
         self.TW_node.repaint()
         
@@ -124,7 +125,7 @@ class drQt(widget_class, base_class):
         self.TW_job.setRowCount(num_jobs)        
 
         for i in range(num_jobs):
-            job_tab = drQtLib.JobTab(jobs[i],parent=self.TW_job)
+            job_tab = JobTab(jobs[i],parent=self.TW_job)
             job_tab.add_to_table(self.TW_job, i)
             self.jobs_tab_list.append(job_tab)
         
@@ -135,12 +136,12 @@ class drQt(widget_class, base_class):
         num_nodes = len(nodes)
         self.TW_node.setRowCount(num_nodes)
         for i in range(num_nodes):
-            node_tab = drQtLib.SlaveNodeTab(nodes[i],parent=self.TW_node)
+            node_tab = SlaveNodeTab(nodes[i],parent=self.TW_node)
             node_tab.add_to_table(self.TW_node, i)
             self.nodes_tab_list.append(node_tab)
                       
     def setup_about(self):
-        url=QtCore.QUrl("ui/about.html")
+        url=QtCore.QUrl("lib/ui/about.html")
         self.WV_about.load(url)
         
     def set_main_icons(self):
