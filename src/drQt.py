@@ -51,10 +51,10 @@ class drQt(widget_class, base_class):
         self.setWindowFlags(QtCore.Qt.Window |
                             QtCore.Qt.WindowMinimizeButtonHint | 
                             QtCore.Qt.WindowCloseButtonHint | 
-                            QtCore.Qt.WindowMaximizeButtonHint)        
-        
+                            QtCore.Qt.WindowMaximizeButtonHint)   
+             
+        #    store the selected row
         self.connect(self.TW_job,QtCore.SIGNAL("cellClicked(int,int)"),self._store_selected_job)
-        
         
     def _store_selected_job(self,row,column):
         self._selected_job_row = row
@@ -99,7 +99,11 @@ class drQt(widget_class, base_class):
         self.init_nodes_tabs()
         self.TW_job.repaint()
         self.TW_node.repaint()
-        self.TW_job.setCurrentCell(self._selected_job_row,0)
+        
+        if self._selected_job_row != None:
+            log.debug("restore row selection %s"%self._selected_job_row)
+            self.TW_job.setCurrentCell(self._selected_job_row,0)
+        
         self.setCursor(QtCore.Qt.ArrowCursor);
         
     def set_autorefresh(self,status):
@@ -132,7 +136,7 @@ class drQt(widget_class, base_class):
         num_nodes = len(nodes)
         self.TW_node.setRowCount(num_nodes)
         for i in range(num_nodes):
-            node_tab = drQtLib.NodeTab(nodes[i],parent=self.TW_node)
+            node_tab = drQtLib.SlaveNodeTab(nodes[i],parent=self.TW_node)
             node_tab.add_to_table(self.TW_node, i)
             self.nodes_tab_list.append(node_tab)
                       
