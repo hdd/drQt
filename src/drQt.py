@@ -43,22 +43,21 @@ class drQt(widget_class, base_class):
         
         self.setup_main()
         self.PB_refresh.clicked.connect(self.refresh)
-        self.CB_auto_refresh.stateChanged.connect(self.autorefresh)
-        
-        #    catch the "done" signal from the thread and update the table
+        self.CB_auto_refresh.stateChanged.connect(self.set_autorefresh)
         self.connect(self._timer_,QtCore.SIGNAL("time_elapsed"),self.refresh)
+        
         self.SB_refresh_time.setMinimum(1)
-        self.SB_refresh_time.setValue(3)
-        #    set the dialog as a standard window
+        self.SB_refresh_time.setValue(2)
+
         self.setWindowFlags(QtCore.Qt.Window |
                             QtCore.Qt.WindowMinimizeButtonHint | 
                             QtCore.Qt.WindowCloseButtonHint | 
                             QtCore.Qt.WindowMaximizeButtonHint)        
         
-        self.connect(self.TW_job,QtCore.SIGNAL("cellClicked(int,int)"),self.store_selected_job)
+        self.connect(self.TW_job,QtCore.SIGNAL("cellClicked(int,int)"),self._store_selected_job)
         
         
-    def store_selected_job(self,row,column):
+    def _store_selected_job(self,row,column):
         self._selected_job_row = row
         
     def setup_main(self):
@@ -104,7 +103,7 @@ class drQt(widget_class, base_class):
         self.TW_job.setCurrentCell(self._selected_job_row,0)
         self.setCursor(QtCore.Qt.ArrowCursor);
         
-    def autorefresh(self,status):
+    def set_autorefresh(self,status):
         if status:
             log.debug("autorefresh:ON")
             refresh_time=self.SB_refresh_time.value()

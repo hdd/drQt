@@ -17,6 +17,10 @@ icons_path = os.path.join(current_path,"ui","icons")
 
 
 class Timer(QtCore.QThread):
+    """
+    generic threaded timer
+    emit a "time_elapsed" signal to notify the elapsed time  
+    """
     def __init__(self,parent=None):
         super(Timer,self).__init__(parent=parent)
         self.runTime = 5
@@ -24,9 +28,15 @@ class Timer(QtCore.QThread):
         self._running=True
         
     def set_run_time(self,time=5):
+        """
+        set the time between the signal emissions
+        """
         self.runTime = time
         
     def run(self): 
+        """
+        here is where the count down happen
+        """
         while True:
             counter = self.runTime
             for sec in range(self.runTime):
@@ -35,7 +45,6 @@ class Timer(QtCore.QThread):
             self.emit(QtCore.SIGNAL("time_elapsed"))        
 
 
-                 
 class JobTab(QtGui.QWidget):
     
     def __init__(self,drq_job_object=None,parent=None):
@@ -87,6 +96,9 @@ class JobTab(QtGui.QWidget):
         self._set_tooltip()
     
     def _set_values(self):        
+        """
+        set tab values using the drq job object 
+        """
         self._tab_id.setText("%s"%self._drq_job_object.id)        
         self._tab_name.setText("%s"%self._drq_job_object.name)
         self._tab_owner.setText("%s"%self._drq_job_object.owner)
@@ -97,11 +109,18 @@ class JobTab(QtGui.QWidget):
         self._tab_pool.setText("%s"%self._drq_job_object.limits.pool)
             
     def _set_context(self):
+        """
+        bind the context menu to all the columns
+        """
         for column in self.columns:
             column.setContextMenuPolicy(QtCore.Qt.CustomContextMenu) 
             self.connect(column, QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self._create_context)
                         
     def _set_tooltip(self):
+        """
+        build up the tooltip using the drq job object
+        bind the tooltip to all the columns
+        """
         html_tooltip=open(os.path.join(tooltips_path,"job_info.html"),"r")
         tooltipData ={}
         tooltipData["cmd"]=self._drq_job_object.cmd
@@ -113,6 +132,9 @@ class JobTab(QtGui.QWidget):
             column.setToolTip(formattedTolltip)
             
     def _create_context(self,QPoint):
+        """
+        create the context menu
+        """
         #print currentItem._tab_id
         newAct =QtGui.QAction("&New Job",self)
         newAct.setToolTip("createa new job")
@@ -147,22 +169,22 @@ class JobTab(QtGui.QWidget):
         menu.addAction("Delete")
         
         # Show the context menu in the mouse position 
-        menu.exec_(QtGui.QCursor.pos())   
-        
-    def _emit_details(self):
-        self.emit(QtCore.SIGNAL("job_details(QVariant)"), QtCore.QVariant(self._drq_job_object))       
+        menu.exec_(QtGui.QCursor.pos())         
                 
     def add_to_table(self,table,index):
-            table.setCellWidget(index,0,self._tab_id)
-            table.setCellWidget(index,1,self._tab_name)
-            table.setCellWidget(index,2,self._tab_owner)
-            table.setCellWidget(index,3,self._tab_status) 
-            table.setCellWidget(index,4,self._tab_procs) 
-            table.setCellWidget(index,5,self._tab_est_time) 
-            
-            table.setCellWidget(index,7,self._tab_priority) 
-            table.setCellWidget(index,8,self._tab_pool) 
-            
+        """
+        bind the job row data to the job table
+        """
+        table.setCellWidget(index,0,self._tab_id)
+        table.setCellWidget(index,1,self._tab_name)
+        table.setCellWidget(index,2,self._tab_owner)
+        table.setCellWidget(index,3,self._tab_status) 
+        table.setCellWidget(index,4,self._tab_procs) 
+        table.setCellWidget(index,5,self._tab_est_time) 
+        
+        table.setCellWidget(index,7,self._tab_priority) 
+        table.setCellWidget(index,8,self._tab_pool) 
+        
 
 class NodeTab(QtGui.QWidget):
     def __init__(self,drq_node_object=None,parent=None):
