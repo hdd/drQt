@@ -65,8 +65,8 @@ class JobTab(QtGui.QWidget):
         self._set_values()
         self._set_context()
         self._set_tooltip()
-    
-        
+     
+           
     def _node_view_show(self):
         log.debug("starting node view")
         NW_widget=NodeViewer(self)
@@ -115,8 +115,9 @@ class JobTab(QtGui.QWidget):
         create the context menu
         """
         #print currentItem._tab_id
-        newAct =QtGui.QAction("&New Job",self)
-        newAct.setToolTip("createa new job")
+        #newAct =QtGui.QAction("&New Job",self)
+        #newAct.setToolTip("createa new job")
+        #self.connect(newAct, QtCore.SIGNAL('triggered()'), self._new_job_show)  
                 
         copyAct = QtGui.QAction("&Copy Job",self)
         copyAct.setToolTip("copy the job")
@@ -143,7 +144,7 @@ class JobTab(QtGui.QWidget):
         
         # Create a menu
         menu = QtGui.QMenu("Menu", self)
-        menu.addAction(newAct)
+        #menu.addAction(newAct)
         menu.addAction(copyAct) 
         menu.addSeparator()
         menu.addAction(rerunAct)
@@ -154,6 +155,7 @@ class JobTab(QtGui.QWidget):
         menu.addAction(nodedAct) 
         # Show the context menu in the mouse position 
         menu.exec_(QtGui.QCursor.pos())         
+                
                 
     def delete_job(self):
         self._drq_job_object.delete()

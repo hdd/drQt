@@ -33,7 +33,7 @@ class JobNode(QtGui.QGraphicsItem ):
         painter.setPen(QtGui.QPen(QtCore.Qt.black, 1));
         painter.setBrush(QtGui.QBrush(QtCore.Qt.green, QtCore.Qt.SolidPattern));        
         painter.drawRect(self.rect)
-        painter.setFont(QtGui.QFont("arial",4,5))
+        painter.setFont(QtGui.QFont("arial",3,4))
                 
         node_text="Name: %s"%(self._drq_job_object.name)
 

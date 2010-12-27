@@ -13,6 +13,9 @@ icons_path = os.path.join(current_path,"ui","icons")
 main_ui_path=os.path.join(current_path,"ui","drQt.ui")
 main_widget_class, main_base_class = uic.loadUiType(main_ui_path)  
 
+newJob_ui_path=os.path.join(current_path,"ui","newJob.ui")
+newJob_widget_class, newJob_base_class = uic.loadUiType(newJob_ui_path)  
+
 class Timer(QtCore.QThread):
     """
     generic threaded timer

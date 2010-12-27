@@ -17,6 +17,9 @@ from lib.utils import main_widget_class
 from lib.utils import main_base_class
 from lib.utils import icons_path
 
+from lib.newJob import NewJob
+
+
 logging.basicConfig()
 log = logging.getLogger("drQt")
 log.setLevel(logging.DEBUG)
@@ -72,13 +75,25 @@ class drQt(main_widget_class, main_base_class):
         self.LB_header.setPixmap(QtGui.QPixmap(os.path.join(icons_path,"drQHeader.png")))   
         #    store the selected row
         self.connect(self.TW_job,QtCore.SIGNAL("cellClicked(int,int)"),self._store_selected_job)
+        self.connect(self.TW_job,QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self._create_context)
+
         
+    def _raise_new_job(self):
+        log.debug("start new job")
+        newjobD=NewJob(self)
+        newjobD.show()    
+                    
     def _raise_about(self):
         aboutD= AboutDialog(self)
         aboutD.show()   
     
     def setup_menu_bar(self):
         menu_bar = self.menuBar()
+        job_bar = menu_bar.addMenu("&Job")
+        new_job =QtGui.QAction("&New Job",self)
+        self.connect(new_job, QtCore.SIGNAL('triggered()'), self._raise_new_job)
+        job_bar.addAction(new_job)
+        
         help_bar = menu_bar.addMenu("&Help")
         
         About =QtGui.QAction("&About",self)
@@ -182,6 +197,20 @@ class drQt(main_widget_class, main_base_class):
     def _get_all_nodes(self):
         computer_list = drqueue.request_computer_list (drqueue.CLIENT)
         return computer_list
+    
+    def _create_context(self,QPoint):
+        """
+        create the context menu
+        """
+        #print currentItem._tab_id
+        newAct =QtGui.QAction("&New Job",self)
+        newAct.setToolTip("createa new job")
+        self.connect(newAct, QtCore.SIGNAL('triggered()'), self._new_job_show)  
+        
+        menu = QtGui.QMenu("Menu", self)
+        menu.addAction(newAct)
+        menu.exec_(QtGui.QCursor.pos())  
+             
         
 def main():
     app = QtGui.QApplication(sys.argv)
