@@ -15,14 +15,14 @@ from utils import tooltips_path
 class JobNode(QtGui.QGraphicsItem ):
     xsize=60
     ysize=30
-    def __init__(self):
+    def __init__(self,drq_job_object):
         super(JobNode,self).__init__()
         self.setFlag(QtGui.QGraphicsItem.ItemIsFocusable)
         self.setFlag(QtGui.QGraphicsItem.ItemIsMovable)
         self.setPos(0,0)
         self.setScale(2)
         self.rect=QtCore.QRectF(self.xsize,self.ysize,self.xsize,self.ysize)
-        #self._name = drq_job_object.name
+        self._name = drq_job_object.name
         
     def boundingRect(self):
         return QtCore.QRectF(self.xsize,self.ysize,self.xsize,self.ysize)
@@ -33,16 +33,19 @@ class JobNode(QtGui.QGraphicsItem ):
         painter.setBrush(QtGui.QBrush(QtCore.Qt.yellow, QtCore.Qt.SolidPattern));        
         painter.drawRect(self.rect)
         painter.setFont(QtGui.QFont("arial",4,5))
-        painter.drawText(self.rect,"#jobId\nJobName",QtGui.QTextOption(QtCore.Qt.AlignLeft))  
+        painter.drawText(self.rect,self._name,QtGui.QTextOption(QtCore.Qt.AlignLeft))  
         
-class NodeViewer(QtGui.QWidget):
-    def __init__(self):
-        super(NodeViewer,self).__init__()
-        view = QtGui.QGraphicsView()
-        scene = QtGui.QGraphicsScene()
+class NodeViewer(QtGui.QDialog):
+    def __init__(self,parent=None):
+        super(NodeViewer,self).__init__(parent)
+        self.view = QtGui.QGraphicsView()
+        self.scene = QtGui.QGraphicsScene()
         layout = QtGui.QVBoxLayout()
-        layout.addWidget(view)
+        layout.addWidget(self.view)
         self.setLayout(layout)
-        #job_node = JobNode()
-        #scene.addItem(job_node)
-        #view.setScene(scene)
+        self.view.setScene(self.scene)
+        
+    def add_node(self,drq_job_object):
+        job_node = JobNode(drq_job_object)
+        self.scene.addItem(job_node)
+        

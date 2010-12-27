@@ -10,6 +10,7 @@ import drqueue.base.libdrqueue as drqueue
 
 from utils import icons_path
 from utils import tooltips_path
+from lib.nodeViewer import NodeViewer
 
 logging.basicConfig()
 log = logging.getLogger("job_tab")
@@ -64,6 +65,15 @@ class JobTab(QtGui.QWidget):
         self._set_values()
         self._set_context()
         self._set_tooltip()
+    
+        
+    def _node_view_show(self):
+        print self._drq_job_object.name
+        
+        NW_widget=NodeViewer(self)
+        NW_widget.add_node(self._drq_job_object)
+        NW_widget.show()
+        
     
     def _set_values(self):        
         """
@@ -130,7 +140,8 @@ class JobTab(QtGui.QWidget):
 
         nodedAct = QtGui.QAction("Node &View",self)
         nodedAct.setToolTip("view job dependencies")    
-            
+        self.connect(nodedAct, QtCore.SIGNAL('triggered()'), self._node_view_show)  
+        
         # Create a menu
         menu = QtGui.QMenu("Menu", self)
         menu.addAction(newAct)

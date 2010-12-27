@@ -12,15 +12,15 @@ from lib.slaveTab import SlaveNodeTab
 from lib.jobTab import JobTab
 from lib.utils import Timer
 
-from lib.utils import widget_class
-from lib.utils import base_class
+from lib.utils import main_widget_class
+from lib.utils import main_base_class
 from lib.utils import icons_path
 
 logging.basicConfig()
 log = logging.getLogger("drQt")
 log.setLevel(logging.DEBUG)
 
-class drQt(widget_class, base_class):
+class drQt(main_widget_class, main_base_class):
     
     node_properties=["Id","Enabled","Running","Name","Os","CPUs","Load Avg","Pools"]
     job_properties=["Id","Name","Owner","Status","Process","Left","Done","Priority","Pool"]
@@ -58,7 +58,7 @@ class drQt(widget_class, base_class):
         
     def _store_selected_job(self,row,column):
         self._selected_job_row = row
-        
+
     def setup_main(self):
         self.setWindowTitle("DrQueue Manager")
         self.set_main_icons()
