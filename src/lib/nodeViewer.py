@@ -12,6 +12,17 @@ from utils import icons_path
 from utils import tooltips_path
 
 
+class ConnectionItem(QtGui.QGraphicsItem ):
+    def __init__(self,source_node =None, dest_node=None):
+        super(ConnectionItem,self).__init__()
+        self.start_point=QtCore.QPointF(source_node.pos())
+        self.dest_point=QtCore.QPointF(dest_node.pos())
+        
+    def paint(self, painter, option, widget):
+        painter.setPen(QtGui.QPen(QtCore.Qt.black, 1))
+        line = QtCore.QLineF(self.start_point, self.dest_point)
+        painter.drawLine(line);
+    
 class JobNode(QtGui.QGraphicsItem ):
     xsize=60
     ysize=30
@@ -30,8 +41,8 @@ class JobNode(QtGui.QGraphicsItem ):
 
     def paint(self, painter, option, widget):
         painter.setRenderHint(QtGui.QPainter.Antialiasing)
-        painter.setPen(QtGui.QPen(QtCore.Qt.black, 1));
-        painter.setBrush(QtGui.QBrush(QtCore.Qt.green, QtCore.Qt.SolidPattern));        
+        painter.setPen(QtGui.QPen(QtCore.Qt.black, 1))
+        painter.setBrush(QtGui.QBrush(QtCore.Qt.green, QtCore.Qt.SolidPattern))   
         painter.drawRect(self.rect)
         painter.setFont(QtGui.QFont("arial",3,4))
                 

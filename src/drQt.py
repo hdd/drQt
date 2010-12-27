@@ -73,7 +73,6 @@ class drQt(main_widget_class, main_base_class):
              
              
         self.LB_header.setPixmap(QtGui.QPixmap(os.path.join(icons_path,"drQHeader.png")))   
-        #    store the selected row
         self.connect(self.TW_job,QtCore.SIGNAL("cellClicked(int,int)"),self._store_selected_job)
         self.connect(self.TW_job,QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self._create_context)
 
@@ -81,12 +80,16 @@ class drQt(main_widget_class, main_base_class):
     def _raise_new_job(self):
         log.debug("start new job")
         newjobD=NewJob(self)
+        newjobD.setFixedSize(600,400)
         newjobD.show()    
                     
     def _raise_about(self):
         aboutD= AboutDialog(self)
         aboutD.show()   
-    
+        
+    def _store_selected_job(self,row,column):
+        self._selected_job_row = row
+            
     def setup_menu_bar(self):
         menu_bar = self.menuBar()
         job_bar = menu_bar.addMenu("&Job")
@@ -99,9 +102,7 @@ class drQt(main_widget_class, main_base_class):
         About =QtGui.QAction("&About",self)
         self.connect(About, QtCore.SIGNAL('triggered()'), self._raise_about)
         help_bar.addAction(About)
-        
-    def _store_selected_job(self,row,column):
-        self._selected_job_row = row
+
         
     def setup_main(self):
         self.setWindowTitle("DrQueue Manager")
