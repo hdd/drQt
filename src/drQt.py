@@ -22,8 +22,6 @@ log = logging.getLogger("drQt")
 log.setLevel(logging.DEBUG)
 
 
-
-
 class AboutDialog(QtGui.QDialog):
     def __init__(self,parent=None):
         super(AboutDialog,self).__init__(parent)
@@ -35,7 +33,7 @@ class AboutDialog(QtGui.QDialog):
         web_view.load(url)
         self.setFixedSize(600, 800)
         self.setWindowIcon(QtGui.QIcon(os.path.join(icons_path,"about.svg")))
-
+        self.setWindowTitle("About")
 
 class drQt(main_widget_class, main_base_class):
     
@@ -70,11 +68,12 @@ class drQt(main_widget_class, main_base_class):
                             QtCore.Qt.WindowCloseButtonHint | 
                             QtCore.Qt.WindowMaximizeButtonHint)   
              
+             
+        self.LB_header.setPixmap(QtGui.QPixmap(os.path.join(icons_path,"drQHeader.png")))   
         #    store the selected row
         self.connect(self.TW_job,QtCore.SIGNAL("cellClicked(int,int)"),self._store_selected_job)
         
     def _raise_about(self):
-        print "HELLO"
         aboutD= AboutDialog(self)
         aboutD.show()   
     

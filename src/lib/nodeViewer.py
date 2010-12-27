@@ -65,6 +65,7 @@ class NodeViewer(QtGui.QDialog):
         self.view.setScene(self.scene)
         self.setWindowTitle("job node view")
         self.setWindowIcon(QtGui.QIcon(os.path.join(icons_path,"nodes.svg")))
+        self.setMinimumSize(600,400)
         
     def add_node(self,drq_job_object):
         job_node = JobNode(drq_job_object)
