@@ -71,7 +71,6 @@ class drQt(main_widget_class, main_base_class):
                             QtCore.Qt.WindowCloseButtonHint | 
                             QtCore.Qt.WindowMaximizeButtonHint)   
              
-             
         self.LB_header.setPixmap(QtGui.QPixmap(os.path.join(icons_path,"drQHeader.png")))   
         self.connect(self.TW_job,QtCore.SIGNAL("cellClicked(int,int)"),self._store_selected_job)
         self.connect(self.TW_job,QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self._create_context)
