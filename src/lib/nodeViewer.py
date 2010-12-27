@@ -22,7 +22,7 @@ class JobNode(QtGui.QGraphicsItem ):
         self.setPos(0,0)
         self.setScale(2)
         self.rect=QtCore.QRectF(self.xsize,self.ysize,self.xsize,self.ysize)
-        self._name = drq_job_object.name
+        self._drq_job_object = drq_job_object
         
     def boundingRect(self):
         return QtCore.QRectF(self.xsize,self.ysize,self.xsize,self.ysize)
@@ -30,10 +30,13 @@ class JobNode(QtGui.QGraphicsItem ):
     def paint(self, painter, option, widget):
         painter.setRenderHint(QtGui.QPainter.Antialiasing)
         painter.setPen(QtGui.QPen(QtCore.Qt.black, 1));
-        painter.setBrush(QtGui.QBrush(QtCore.Qt.yellow, QtCore.Qt.SolidPattern));        
+        painter.setBrush(QtGui.QBrush(QtCore.Qt.green, QtCore.Qt.SolidPattern));        
         painter.drawRect(self.rect)
         painter.setFont(QtGui.QFont("arial",4,5))
-        painter.drawText(self.rect,self._name,QtGui.QTextOption(QtCore.Qt.AlignLeft))  
+                
+        node_text="Name: %s\nCmd: %s"%(self._drq_job_object.name,self._drq_job_object.cmd)
+        
+        painter.drawText(self.rect,node_text,QtGui.QTextOption(QtCore.Qt.AlignVCenter|QtCore.Qt.AlignHCenter))  
         
 class NodeViewer(QtGui.QDialog):
     def __init__(self,parent=None):
@@ -44,6 +47,8 @@ class NodeViewer(QtGui.QDialog):
         layout.addWidget(self.view)
         self.setLayout(layout)
         self.view.setScene(self.scene)
+        self.setWindowTitle("job node view")
+        self.setWindowIcon(QtGui.QIcon(os.path.join(icons_path,"nodes.svg")))
         
     def add_node(self,drq_job_object):
         job_node = JobNode(drq_job_object)

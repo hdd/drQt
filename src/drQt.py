@@ -147,8 +147,8 @@ class drQt(main_widget_class, main_base_class):
     def set_main_icons(self):
         self.setWindowIcon(QtGui.QIcon(os.path.join(icons_path,"main.svg")))
         self.TW_main.setTabIcon(0,QtGui.QIcon(os.path.join(icons_path,"job.svg")))
-        self.TW_main.setTabIcon(2,QtGui.QIcon(os.path.join(icons_path,"nodes.svg")))        
-        self.TW_main.setTabIcon(3,QtGui.QIcon(os.path.join(icons_path,"about.svg")))        
+        self.TW_main.setTabIcon(1,QtGui.QIcon(os.path.join(icons_path,"nodes.svg")))        
+        self.TW_main.setTabIcon(2,QtGui.QIcon(os.path.join(icons_path,"about.svg")))        
         
     def _get_all_jobs(self):
         job_list = drqueue.request_job_list(drqueue.CLIENT)
