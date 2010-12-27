@@ -172,8 +172,9 @@ class drQt(main_widget_class, main_base_class):
         for i in range(num_jobs):
             job_tab = JobTab(jobs[i],parent=self.TW_job)
             job_tab.add_to_table(self.TW_job, i)
-            self.jobs_tab_list.append(job_tab)
             self.connect(job_tab, QtCore.SIGNAL('update'), self.refresh)
+            self.jobs_tab_list.append(job_tab)
+            
         
     def init_slaves_tabs(self):
         self.nodes_tab_list=[]

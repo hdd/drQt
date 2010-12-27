@@ -118,6 +118,10 @@ class JobTab(QtGui.QWidget):
         self._drq_job_object.request_stop(drqueue.CLIENT)
         self._emit_uptdate()
     
+    def _hardstop_job(self):
+        self._drq_job_object.request_hard_stop(drqueue.CLIENT)     
+        self._emit_uptdate()
+            
     def _rerun_job(self):
         self._drq_job_object.request_rerun(drqueue.CLIENT)     
         self._emit_uptdate()
@@ -152,18 +156,19 @@ class JobTab(QtGui.QWidget):
                 
         hstopAct = QtGui.QAction("&Hard Stop",self)
         hstopAct.setToolTip("hard stop the running job")
-
+        self.connect(hstopAct, QtCore.SIGNAL('triggered()'), self._hardstop_job)
+        
         continueAct = QtGui.QAction("&Continue",self)
         continueAct.setToolTip("Continue the stop job")
         self.connect(continueAct, QtCore.SIGNAL('triggered()'), self._continue_job) 
         
         deleteAct = QtGui.QAction("&Delete",self)
         deleteAct.setToolTip("delete the job")
-        self.connect(deleteAct, QtCore.SIGNAL('triggered()'), self._stop_job) 
+        self.connect(deleteAct, QtCore.SIGNAL('triggered()'), self._delete_job) 
 
         nodedAct = QtGui.QAction("Node &View",self)
         nodedAct.setToolTip("view job dependencies")    
-        self.connect(nodedAct, QtCore.SIGNAL('triggered()'), self._delete_job)  
+        self.connect(nodedAct, QtCore.SIGNAL('triggered()'), self._node_view_show)  
         
         # Create a menu
         menu = QtGui.QMenu("Menu", self)
