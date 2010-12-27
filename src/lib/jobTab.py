@@ -68,8 +68,7 @@ class JobTab(QtGui.QWidget):
     
         
     def _node_view_show(self):
-        print self._drq_job_object.name
-        
+        log.debug("starting node view")
         NW_widget=NodeViewer(self)
         NW_widget.add_node(self._drq_job_object)
         NW_widget.show()

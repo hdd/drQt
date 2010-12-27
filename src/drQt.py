@@ -4,6 +4,7 @@ import logging
 
 import PyQt4.QtGui as QtGui
 import PyQt4.QtCore as QtCore
+import PyQt4.QtWebKit as QtWebKit
 
 import drqueue.base.libdrqueue as drqueue
 
@@ -19,6 +20,22 @@ from lib.utils import icons_path
 logging.basicConfig()
 log = logging.getLogger("drQt")
 log.setLevel(logging.DEBUG)
+
+
+
+
+class AboutDialog(QtGui.QDialog):
+    def __init__(self,parent=None):
+        super(AboutDialog,self).__init__(parent)
+        layout=QtGui.QVBoxLayout()
+        self.setLayout(layout)
+        web_view=QtWebKit.QWebView()
+        layout.addWidget(web_view)
+        url=QtCore.QUrl("lib/ui/about.html")
+        web_view.load(url)
+        self.setFixedSize(600, 800)
+        self.setWindowIcon(QtGui.QIcon(os.path.join(icons_path,"about.svg")))
+
 
 class drQt(main_widget_class, main_base_class):
     
@@ -56,13 +73,27 @@ class drQt(main_widget_class, main_base_class):
         #    store the selected row
         self.connect(self.TW_job,QtCore.SIGNAL("cellClicked(int,int)"),self._store_selected_job)
         
+    def _raise_about(self):
+        print "HELLO"
+        aboutD= AboutDialog(self)
+        aboutD.show()   
+    
+    def setup_menu_bar(self):
+        menu_bar = self.menuBar()
+        help_bar = menu_bar.addMenu("&Help")
+        
+        About =QtGui.QAction("&About",self)
+        self.connect(About, QtCore.SIGNAL('triggered()'), self._raise_about)
+        help_bar.addAction(About)
+        
     def _store_selected_job(self,row,column):
         self._selected_job_row = row
-
+        
     def setup_main(self):
         self.setWindowTitle("DrQueue Manager")
+        self.setup_menu_bar()
         self.set_main_icons()
-        self.setup_about()
+        
         self.setup_jobs()
         self.init_jobs_tabs()
         
@@ -139,16 +170,11 @@ class drQt(main_widget_class, main_base_class):
             node_tab = SlaveNodeTab(nodes[i],parent=self.TW_node)
             node_tab.add_to_table(self.TW_node, i)
             self.nodes_tab_list.append(node_tab)
-                      
-    def setup_about(self):
-        url=QtCore.QUrl("lib/ui/about.html")
-        self.WV_about.load(url)
-        
+            
     def set_main_icons(self):
         self.setWindowIcon(QtGui.QIcon(os.path.join(icons_path,"main.svg")))
         self.TW_main.setTabIcon(0,QtGui.QIcon(os.path.join(icons_path,"job.svg")))
         self.TW_main.setTabIcon(1,QtGui.QIcon(os.path.join(icons_path,"nodes.svg")))        
-        self.TW_main.setTabIcon(2,QtGui.QIcon(os.path.join(icons_path,"about.svg")))        
         
     def _get_all_jobs(self):
         job_list = drqueue.request_job_list(drqueue.CLIENT)

@@ -23,6 +23,7 @@ class JobNode(QtGui.QGraphicsItem ):
         self.setScale(2)
         self.rect=QtCore.QRectF(self.xsize,self.ysize,self.xsize,self.ysize)
         self._drq_job_object = drq_job_object
+        self._set_tooltip()
         
     def boundingRect(self):
         return QtCore.QRectF(self.xsize,self.ysize,self.xsize,self.ysize)
@@ -34,9 +35,24 @@ class JobNode(QtGui.QGraphicsItem ):
         painter.drawRect(self.rect)
         painter.setFont(QtGui.QFont("arial",4,5))
                 
-        node_text="Name: %s\nCmd: %s"%(self._drq_job_object.name,self._drq_job_object.cmd)
-        
+        node_text="Name: %s"%(self._drq_job_object.name)
+
         painter.drawText(self.rect,node_text,QtGui.QTextOption(QtCore.Qt.AlignVCenter|QtCore.Qt.AlignHCenter))  
+ 
+    def _set_tooltip(self):
+        """
+        build up the tooltip using the drq job object
+        bind the tooltip to all the columns
+        """
+        html_tooltip=open(os.path.join(tooltips_path,"job_info.html"),"r")
+        tooltipData ={}
+        tooltipData["cmd"]=self._drq_job_object.cmd
+        tooltipData["envvars"]=self._drq_job_object.envvars
+        tooltipData["dependid"]=self._drq_job_object.dependid
+        
+        formattedTolltip=str(html_tooltip.read()).format(**tooltipData)
+        self.setToolTip(formattedTolltip)
+                    
         
 class NodeViewer(QtGui.QDialog):
     def __init__(self,parent=None):

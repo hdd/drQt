@@ -31,7 +31,7 @@
         </sizepolicy>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>1</number>
        </property>
        <widget class="QWidget" name="QW_job">
         <attribute name="title">
@@ -99,28 +99,6 @@
            <attribute name="verticalHeaderStretchLastSection">
             <bool>false</bool>
            </attribute>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-       <widget class="QWidget" name="QW_about">
-        <attribute name="title">
-         <string>About</string>
-        </attribute>
-        <layout class="QGridLayout" name="gridLayout_3">
-         <item row="0" column="0">
-          <widget class="QWebView" name="WV_about">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="url">
-            <url>
-             <string>about:blank</string>
-            </url>
-           </property>
           </widget>
          </item>
         </layout>
@@ -216,7 +194,6 @@
     </item>
    </layout>
    <zorder>ST_main_</zorder>
-   <zorder>layoutWidget</zorder>
    <zorder></zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -228,22 +205,9 @@
      <height>28</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuMyMenu">
-    <property name="title">
-     <string>myMenu</string>
-    </property>
-   </widget>
-   <addaction name="menuMyMenu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QWebView</class>
-   <extends>QWidget</extends>
-   <header>QtWebKit/QWebView</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
