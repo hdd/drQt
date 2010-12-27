@@ -34,7 +34,7 @@ class AboutDialog(QtGui.QDialog):
         layout.addWidget(web_view)
         url=QtCore.QUrl("lib/ui/about.html")
         web_view.load(url)
-        self.setFixedSize(600, 800)
+        self.setFixedSize(600, 750)
         self.setWindowIcon(QtGui.QIcon(os.path.join(icons_path,"about.svg")))
         self.setWindowTitle("About")
 
@@ -75,7 +75,6 @@ class drQt(main_widget_class, main_base_class):
         self.LB_header.setPixmap(QtGui.QPixmap(os.path.join(icons_path,"drQHeader.png")))   
         self.connect(self.TW_job,QtCore.SIGNAL("cellClicked(int,int)"),self._store_selected_job)
         self.connect(self.TW_job,QtCore.SIGNAL("customContextMenuRequested(QPoint)"), self._create_context)
-
         
     def _raise_new_job(self):
         log.debug("start new job")
@@ -174,6 +173,7 @@ class drQt(main_widget_class, main_base_class):
             job_tab = JobTab(jobs[i],parent=self.TW_job)
             job_tab.add_to_table(self.TW_job, i)
             self.jobs_tab_list.append(job_tab)
+            self.connect(job_tab, QtCore.SIGNAL('update'), self.refresh)
         
     def init_slaves_tabs(self):
         self.nodes_tab_list=[]
@@ -215,7 +215,8 @@ class drQt(main_widget_class, main_base_class):
         
 def main():
     app = QtGui.QApplication(sys.argv)
-    dialog = drQt()    
+    dialog = drQt()  
+    dialog.resize(1000,600)  
     dialog.show()
     return app.exec_()
 

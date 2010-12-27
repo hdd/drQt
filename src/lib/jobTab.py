@@ -109,7 +109,27 @@ class JobTab(QtGui.QWidget):
         formattedTolltip=str(html_tooltip.read()).format(**tooltipData)
         for column in self.columns:
             column.setToolTip(formattedTolltip)
-            
+                
+    def _emit_uptdate(self):
+        log.debug("emit update")
+        self.emit(QtCore.SIGNAL("update"))
+                    
+    def _stop_job(self):
+        self._drq_job_object.request_stop(drqueue.CLIENT)
+        self._emit_uptdate()
+    
+    def _rerun_job(self):
+        self._drq_job_object.request_rerun(drqueue.CLIENT)     
+        self._emit_uptdate()
+    
+    def _delete_job(self):       
+        self._drq_job_object.request_delete(drqueue.CLIENT)   
+        self._emit_uptdate()    
+    
+    def _continue_job(self):       
+        self._drq_job_object.request_continue(drqueue.CLIENT)              
+        self._emit_uptdate() 
+           
     def _create_context(self,QPoint):
         """
         create the context menu
@@ -124,23 +144,26 @@ class JobTab(QtGui.QWidget):
         
         rerunAct = QtGui.QAction("&Re Run",self)
         rerunAct.setToolTip("Re run the job")
-
+        self.connect(rerunAct, QtCore.SIGNAL('triggered()'), self._rerun_job) 
+        
         stopAct = QtGui.QAction("&Stop",self)
         stopAct.setToolTip("stop the running job")
+        self.connect(stopAct, QtCore.SIGNAL('triggered()'), self._stop_job) 
                 
         hstopAct = QtGui.QAction("&Hard Stop",self)
         hstopAct.setToolTip("hard stop the running job")
 
         continueAct = QtGui.QAction("&Continue",self)
         continueAct.setToolTip("Continue the stop job")
+        self.connect(continueAct, QtCore.SIGNAL('triggered()'), self._continue_job) 
         
         deleteAct = QtGui.QAction("&Delete",self)
         deleteAct.setToolTip("delete the job")
-
+        self.connect(deleteAct, QtCore.SIGNAL('triggered()'), self._stop_job) 
 
         nodedAct = QtGui.QAction("Node &View",self)
         nodedAct.setToolTip("view job dependencies")    
-        self.connect(nodedAct, QtCore.SIGNAL('triggered()'), self._node_view_show)  
+        self.connect(nodedAct, QtCore.SIGNAL('triggered()'), self._delete_job)  
         
         # Create a menu
         menu = QtGui.QMenu("Menu", self)
@@ -150,15 +173,15 @@ class JobTab(QtGui.QWidget):
         menu.addAction(rerunAct)
         menu.addAction(stopAct) 
         menu.addAction(hstopAct)
+        
+        menu.addAction(continueAct)
+        
         menu.addAction(deleteAct)
         menu.addSeparator()
         menu.addAction(nodedAct) 
         # Show the context menu in the mouse position 
         menu.exec_(QtGui.QCursor.pos())         
-                
-                
-    def delete_job(self):
-        self._drq_job_object.delete()
+
                 
     def add_to_table(self,table,index):
         """
@@ -170,7 +193,6 @@ class JobTab(QtGui.QWidget):
         table.setCellWidget(index,3,self._tab_status) 
         table.setCellWidget(index,4,self._tab_procs) 
         table.setCellWidget(index,5,self._tab_est_time) 
-        
         table.setCellWidget(index,7,self._tab_priority) 
         table.setCellWidget(index,8,self._tab_pool) 
         

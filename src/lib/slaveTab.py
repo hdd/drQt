@@ -11,7 +11,6 @@ import drqueue.base.libdrqueue as drqueue
 from utils import icons_path
 from utils import tooltips_path
 
-
 logging.basicConfig()
 log = logging.getLogger("slave_tab")
 log.setLevel(logging.DEBUG)
