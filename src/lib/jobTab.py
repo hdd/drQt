@@ -57,10 +57,15 @@ class JobTab(QtGui.QWidget):
         self._tab_pool=QtGui.QLabel()
         self._tab_pool.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
         self.columns.append(self._tab_pool)
+ 
         
-        self._tab_est_time=QtGui.QProgressBar()
-        self._tab_est_time.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
-        self.columns.append(self._tab_est_time)
+        self._tab_left=QtGui.QProgressBar()
+        self._tab_left.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
+        self.columns.append(self._tab_left)
+
+        self._tab_done=QtGui.QProgressBar()
+        self._tab_done.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
+        self.columns.append(self._tab_done)
         
         self._set_values()
         self._set_context()
@@ -83,7 +88,8 @@ class JobTab(QtGui.QWidget):
         self._tab_owner.setText("%s"%self._drq_job_object.owner)
         self._tab_status.setPixmap( self.icons[self._drq_job_object.status].scaled(25,25))
         self._tab_procs.setText("%d"%self._drq_job_object.nprocs)
-        self._tab_est_time.setValue(self._drq_job_object.fdone)
+        self._tab_left.setValue(100-self._drq_job_object.fdone)
+        self._tab_done.setValue(self._drq_job_object.fdone)
         self._tab_priority.setText("%d"%self._drq_job_object.priority)
         self._tab_pool.setText("%s"%self._drq_job_object.limits.pool)
             
@@ -197,7 +203,8 @@ class JobTab(QtGui.QWidget):
         table.setCellWidget(index,2,self._tab_owner)
         table.setCellWidget(index,3,self._tab_status) 
         table.setCellWidget(index,4,self._tab_procs) 
-        table.setCellWidget(index,5,self._tab_est_time) 
+        table.setCellWidget(index,5,self._tab_left) 
+        table.setCellWidget(index,6,self._tab_done) 
         table.setCellWidget(index,7,self._tab_priority) 
         table.setCellWidget(index,8,self._tab_pool) 
         
