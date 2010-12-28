@@ -44,9 +44,9 @@ class JobNode(QtGui.QGraphicsItem ):
         painter.setPen(QtGui.QPen(QtCore.Qt.black, 1))
         painter.setBrush(QtGui.QBrush(QtCore.Qt.green, QtCore.Qt.SolidPattern))   
         painter.drawRect(self.rect)
-        painter.setFont(QtGui.QFont("arial",3,4))
+        painter.setFont(QtGui.QFont("arial",4,3))
                 
-        node_text="Name: %s"%(self._drq_job_object.name)
+        node_text="Job:#%d\nName: %s"%(self._drq_job_object.id,self._drq_job_object.name)
 
         painter.drawText(self.rect,node_text,QtGui.QTextOption(QtCore.Qt.AlignVCenter|QtCore.Qt.AlignHCenter))  
  
