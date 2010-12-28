@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>882</width>
+    <width>887</width>
     <height>774</height>
    </rect>
   </property>
@@ -27,7 +27,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="comboBox_5">
+      <widget class="QComboBox" name="CB_job_type">
        <item>
         <property name="text">
          <string>General</string>
@@ -40,21 +40,21 @@
    <item row="2" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_19">
      <item>
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="QPushButton" name="PB_submit">
        <property name="text">
         <string>Submit</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="PB_submit_stopped">
        <property name="text">
         <string>Submit Stopped</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="PB_cancel">
        <property name="text">
         <string>Cancel</string>
        </property>
@@ -65,7 +65,7 @@
    <item row="1" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="TB_information">
       <attribute name="title">
@@ -82,7 +82,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="spinBox_18"/>
+          <widget class="QSpinBox" name="SB_padding"/>
          </item>
         </layout>
        </item>
@@ -96,7 +96,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_5">
+          <widget class="QLineEdit" name="LE_name">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -117,7 +117,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_6"/>
+          <widget class="QLineEdit" name="LE_command"/>
          </item>
         </layout>
        </item>
@@ -131,7 +131,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="spinBox_16"/>
+          <widget class="QSpinBox" name="SB_start_frame"/>
          </item>
         </layout>
        </item>
@@ -145,7 +145,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="spinBox_14"/>
+          <widget class="QSpinBox" name="SB_end_frame"/>
          </item>
         </layout>
        </item>
@@ -159,7 +159,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="spinBox_13"/>
+          <widget class="QSpinBox" name="SB_step_frame"/>
          </item>
         </layout>
        </item>
@@ -173,7 +173,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="spinBox_15"/>
+          <widget class="QSpinBox" name="SB_block_size"/>
          </item>
         </layout>
        </item>
@@ -187,7 +187,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="comboBox_6">
+          <widget class="QComboBox" name="CB_priority">
            <item>
             <property name="text">
              <string>Highest</string>
@@ -221,21 +221,11 @@
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="spinBox_17"/>
+          <widget class="QSpinBox" name="SB_priority"/>
          </item>
         </layout>
        </item>
       </layout>
-      <zorder>layoutWidget</zorder>
-      <zorder>layoutWidget_2</zorder>
-      <zorder>layoutWidget_3</zorder>
-      <zorder>layoutWidget_4</zorder>
-      <zorder>layoutWidget_5</zorder>
-      <zorder>layoutWidget_6</zorder>
-      <zorder>layoutWidget_8</zorder>
-      <zorder>layoutWidget_9</zorder>
-      <zorder>label_27</zorder>
-      <zorder>spinBox_13</zorder>
      </widget>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
@@ -252,7 +242,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="spinBox_22"/>
+          <widget class="QSpinBox" name="SB_numcpus"/>
          </item>
         </layout>
        </item>
@@ -266,7 +256,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="spinBox_24"/>
+          <widget class="QSpinBox" name="SB_numcpus_cmp"/>
          </item>
         </layout>
        </item>
@@ -280,7 +270,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="spinBox_23"/>
+          <widget class="QSpinBox" name="SB_min_mem"/>
          </item>
         </layout>
        </item>
@@ -294,7 +284,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QComboBox" name="comboBox_8">
+          <widget class="QComboBox" name="CB_render_pool">
            <property name="editable">
             <bool>true</bool>
            </property>
@@ -320,7 +310,7 @@
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_38">
           <item>
-           <widget class="QCheckBox" name="checkBox_6">
+           <widget class="QCheckBox" name="CK_irix">
             <property name="text">
              <string>Irix</string>
             </property>
@@ -330,7 +320,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="checkBox_7">
+           <widget class="QCheckBox" name="CK_linux">
             <property name="text">
              <string>Linux</string>
             </property>
@@ -340,7 +330,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="checkBox_8">
+           <widget class="QCheckBox" name="CK_osx">
             <property name="text">
              <string>OS X</string>
             </property>
@@ -350,7 +340,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="checkBox_9">
+           <widget class="QCheckBox" name="CK_bsd">
             <property name="text">
              <string>FreeBSD</string>
             </property>
@@ -360,7 +350,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="checkBox_10">
+           <widget class="QCheckBox" name="CK_windows">
             <property name="text">
              <string>Windows</string>
             </property>
@@ -382,14 +372,14 @@
        <item row="0" column="0">
         <layout class="QHBoxLayout" name="horizontalLayout_39">
          <item>
-          <widget class="QCheckBox" name="checkBox_11">
+          <widget class="QCheckBox" name="CK_module">
            <property name="text">
             <string>Load Module</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit_7">
+          <widget class="QLineEdit" name="LE_module">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -398,7 +388,7 @@
         </layout>
        </item>
        <item row="1" column="0">
-        <widget class="QTableWidget" name="tableWidget">
+        <widget class="QTableWidget" name="TW_envs">
          <attribute name="horizontalHeaderStretchLastSection">
           <bool>true</bool>
          </attribute>
