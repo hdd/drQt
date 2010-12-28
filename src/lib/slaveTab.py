@@ -99,20 +99,29 @@ class SlaveNodeTab(QtGui.QWidget):
             column.setToolTip(formattedTolltip)
             
     def _create_context(self,QPoint):
-        detailsAct = QtGui.QAction("&Details",self)
-        detailsAct.setToolTip("get details on the job")
-        #self.connect(detailsAct, SIGNAL('triggered()'), self.on_details)
-        # Create a menu
+
+        enableAct = QtGui.QAction("&Enable",self)        
+        self.connect(enableAct, QtCore.SIGNAL('triggered()'), self._enable_slave) 
+        
+        disableAct = QtGui.QAction("&Disable",self)   
+        self.connect(disableAct, QtCore.SIGNAL('triggered()'), self._disable_slave) 
+        
         menu = QtGui.QMenu("Menu", self) 
-        menu.addAction(detailsAct) 
-        menu.addSeparator()
-        menu.addAction("Enable")
-        menu.addAction("Disable") 
-        # Show the context menu in the mouse position 
+        menu.addAction(enableAct)
+        menu.addAction(disableAct)
         menu.exec_(QtGui.QCursor.pos())           
 
-    def _emit_details(self):
-        self.emit(QtCore.SIGNAL("job_details(QVariant)"), QtCore.QVariant(self.drq_node_object))   
+    def _enable_slave(self):
+        self._drq_node_object.request_enable(drqueue.CLIENT)
+        self._emit_uptdate()
+
+    def _disable_slave(self):
+        self._drq_node_object.request_disable(drqueue.CLIENT)
+        self._emit_uptdate()
+
+    def _emit_uptdate(self):
+        log.debug("emit update")
+        self.emit(QtCore.SIGNAL("update"))  
                         
     def add_to_table(self,table,index):
             table.setCellWidget(index,0,self._tab_id)

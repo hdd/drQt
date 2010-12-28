@@ -178,12 +178,13 @@ class drQt(main_widget_class, main_base_class):
     def init_slaves_tabs(self):
         self.nodes_tab_list=[]
         log.debug("building nodes tabs...")
-        nodes=self._get_all_nodes()
+        nodes=self._get_all_slaves()
         num_nodes = len(nodes)
         self.TW_node.setRowCount(num_nodes)
         for i in range(num_nodes):
             node_tab = SlaveNodeTab(nodes[i],parent=self.TW_node)
             node_tab.add_to_table(self.TW_node, i)
+            self.connect(node_tab, QtCore.SIGNAL('update'), self.refresh)
             self.nodes_tab_list.append(node_tab)
             
     def set_main_icons(self):
@@ -195,7 +196,7 @@ class drQt(main_widget_class, main_base_class):
         job_list = drqueue.request_job_list(drqueue.CLIENT)
         return job_list
     
-    def _get_all_nodes(self):
+    def _get_all_slaves(self):
         computer_list = drqueue.request_computer_list (drqueue.CLIENT)
         return computer_list
     
