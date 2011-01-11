@@ -43,8 +43,8 @@ class drQt(main_widget_class, main_base_class):
     node_properties=["Id","Enabled","Running","Name","Os","CPUs","Load Avg","Pools"]
     job_properties=["Id","Name","Owner","Status","Process","Done","Priority","Pool"]
     
-    def __init__(self,*args,**kwargs):
-        super(drQt,self).__init__(*args,**kwargs)
+    def __init__(self,parent=None):
+        super(drQt,self).__init__(parent=parent)
         
         try:
             drqueue.request_job_list(drqueue.CLIENT)
