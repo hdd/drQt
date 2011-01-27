@@ -71,6 +71,10 @@ class SlaveNodeTab(QtGui.QWidget):
         self._tab_name.setText("%s"%self._drq_node_object.hwinfo.name)
         self._tab_enabled.setPixmap( self.icons[self._drq_node_object.limits.enabled].scaled(25,25))
         
+        self._tab_loadavg.setText("%d:%d:%d"%(self._drq_node_object.status.get_loadavg(0),
+                                              self._drq_node_object.status.get_loadavg(1),
+                                              self._drq_node_object.status.get_loadavg(2)))
+        
         self._tab_os.setText("%s"%drqueue.osstring(self._drq_node_object.hwinfo.os))
         self._tab_cpus.setText("%d"%self._drq_node_object.hwinfo.ncpus)
                 

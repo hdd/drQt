@@ -27,13 +27,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="CB_job_type">
-       <item>
-        <property name="text">
-         <string>General</string>
-        </property>
-       </item>
-      </widget>
+      <widget class="QComboBox" name="CB_job_type"/>
      </item>
     </layout>
    </item>
