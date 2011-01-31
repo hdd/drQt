@@ -85,11 +85,12 @@ class JobTab(QtGui.QWidget):
         self._tab_procs.setText("%d"%self._drq_job_object.nprocs)
         
         tot_frames=self._drq_job_object.frame_end-self._drq_job_object.frame_start
-        done = float(self._drq_job_object.fdone/tot_frames)*100
         
-        print done
+        difframes=float(self._drq_job_object.fleft)/float(tot_frames)
         
-        self._tab_done.setValue(done)
+        done =100-(difframes*100)
+                        
+        self._tab_done.setValue(int(done))
         self._tab_priority.setText("%d"%self._drq_job_object.priority)
         self._tab_pool.setText("%s"%self._drq_job_object.limits.pool)
             
