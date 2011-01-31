@@ -13,12 +13,9 @@ from lib.slaveTab import SlaveNodeTab
 from lib.jobTab import JobTab
 from lib.utils import Timer
 
-from lib.utils import main_widget_class
-from lib.utils import main_base_class
 from lib.utils import icons_path
 
 from lib.newJob import NewJob
-
 
 logging.basicConfig()
 log = logging.getLogger("drQt")
@@ -38,8 +35,10 @@ class AboutDialog(QtGui.QDialog):
         self.setWindowIcon(QtGui.QIcon(os.path.join(icons_path,"about.svg")))
         self.setWindowTitle("About")
 
-class drQt(main_widget_class, main_base_class):
-    
+
+import lib.ui.drQt_UI as drQtUI
+
+class drQt(drQtUI.Ui_MainWindow,QtGui.QMainWindow):
     node_properties=["Id","Enabled","Running","Name","Os","CPUs","Load Avg","Pools"]
     job_properties=["Id","Name","Owner","Status","Process","Done","Priority","Pool"]
     
@@ -78,7 +77,6 @@ class drQt(main_widget_class, main_base_class):
     def _raise_new_job(self):
         log.debug("start new job")
         newjobD=NewJob(self)
-        newjobD.setFixedSize(600,400)
         newjobD.show()    
                     
     def _raise_about(self):
