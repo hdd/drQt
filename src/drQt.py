@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import sys
 import os
 import logging
@@ -6,16 +8,18 @@ import PyQt4.QtGui as QtGui
 import PyQt4.QtCore as QtCore
 import PyQt4.QtWebKit as QtWebKit
 
-import drqueue.base.libdrqueue as drqueue
-
+try:
+	import drqueue.base.libdrqueue as drqueue
+except:
+	raise "libdrqueue not found! please check drqueue python installation"
 
 from lib.slaveTab import SlaveNodeTab
 from lib.jobTab import JobTab
 from lib.utils import Timer
-
 from lib.utils import icons_path
-
 from lib.newJob import NewJob
+
+import lib.ui.drQt_UI as drQtUI
 
 logging.basicConfig()
 log = logging.getLogger("drQt")
@@ -36,8 +40,6 @@ class AboutDialog(QtGui.QDialog):
         self.setWindowTitle("About")
 
 
-import lib.ui.drQt_UI as drQtUI
-
 class drQt(drQtUI.Ui_MainWindow,QtGui.QMainWindow):
     node_properties=["Id","Enabled","Running","Name","Os","CPUs","Load Avg","Pools"]
     job_properties=["Id","Name","Owner","Status","Process","Done","Priority","Pool"]
@@ -46,7 +48,7 @@ class drQt(drQtUI.Ui_MainWindow,QtGui.QMainWindow):
         super(drQt,self).__init__(parent=parent)
         
         try:
-            drqueue.request_job_list(drqueue.CLIENT)
+            self._get_all_jobs()
         except:
             raise "NO MASTER FOUND"
         
@@ -102,6 +104,8 @@ class drQt(drQtUI.Ui_MainWindow,QtGui.QMainWindow):
         
     def setup_main(self):
         self.setWindowTitle("DrQueue Manager")
+        self.resize(1000,600)
+        
         self.setup_menu_bar()
         self.set_main_icons()
         
@@ -123,7 +127,6 @@ class drQt(drQtUI.Ui_MainWindow,QtGui.QMainWindow):
         self.TW_node.setSelectionMode(QtGui.QTableView.SingleSelection) 
                                
     def setup_jobs(self):
-        #add a couple of jobs
         self.TW_job.clear()
 
         self.TW_job.setColumnCount(len(self.job_properties))
@@ -211,11 +214,9 @@ class drQt(drQtUI.Ui_MainWindow,QtGui.QMainWindow):
         menu.addAction(newAct)
         menu.exec_(QtGui.QCursor.pos())  
              
-        
 def main():
     app = QtGui.QApplication(sys.argv)
-    dialog = drQt()  
-    dialog.resize(1000,600)  
+    dialog = drQt()   
     dialog.show()
     return app.exec_()
 
