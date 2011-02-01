@@ -17,7 +17,7 @@ from lib.slaveTab import SlaveNodeTab
 from lib.jobTab import JobTab
 from lib.utils import Timer
 from lib.utils import icons_path
-from lib.newJob import NewJob
+from drQtNewJob import NewJob
 
 import lib.ui.drQt_UI as drQtUI
 
