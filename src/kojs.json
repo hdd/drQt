@@ -31,8 +31,8 @@
             "resy":"${resy}",
             "start_frame":"${start_frame}",
             "end_frame":"${end_frame}",
-            "step":"${step}",
-            "padding":"${padding}"
+            "step":"1",
+            "padding":"4"
             }
      },
     "3DLRender":{
@@ -48,8 +48,8 @@
             "resy":"${resy}",
             "start_frame":"${start_frame}",
             "end_frame":"${end_frame}",
-            "step":"${step}",
-            "padding":"${padding}"
+            "step":"1",
+            "padding":"4"
             }
      },
     "3DLShader":{
@@ -57,7 +57,7 @@
         "extension_filter":["*.sl"],
         "env_module_preload":"3delight_64",
         "pre_cmd":"${pre_cmd}",
-        "cmd":"renderdl",
+        "cmd":"shaderdl",
         "post_cmd":"${post_cmd}",
         "cmd_options":
             {
@@ -66,8 +66,8 @@
             "resy":"${resy}",
             "start_frame":"${start_frame}",
             "end_frame":"${end_frame}",
-            "step":"${step}",
-            "padding":"${padding}"
+            "step":"1",
+            "padding":"4"
             }
      	},
     "MentalRay":{
@@ -84,12 +84,12 @@
             "resy":"${resy}",
             "start_frame":"${start_frame}",
             "end_frame":"${end_frame}",
-            "step":"${step}",
-            "padding":"${padding}"
+            "step":"1",
+            "padding":"4"
             }
      	},
     "Custom":{
-        "description":"Custom",
+        "description":"Custom job , all the flags are open ",
         "extension_filter":["*"],
         "env_module_preload":"${env_module_preload}",
         "pre_cmd":"${pre_cmd}",
@@ -102,8 +102,8 @@
             "resy":"${resy}",
             "start_frame":"${start_frame}",
             "end_frame":"${end_frame}",
-            "step":"${step}",
-            "padding":"${padding}"
+            "step":"1",
+            "padding":"4"
             }
      	}
  
