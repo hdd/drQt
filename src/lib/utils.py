@@ -1,6 +1,8 @@
 import sys
 import os
 import time
+import json
+
 import PyQt4.uic as uic
 
 import PyQt4.QtCore as QtCore
@@ -44,3 +46,41 @@ class Timer(QtCore.QThread):
                 counter -= 1
             self.emit(QtCore.SIGNAL("time_elapsed"))   
             
+class KojsConfigParser(object):
+    '''
+    parser for kojs config file
+    '''
+    def __init__(self,json_file):
+        
+        self._file_in=open(json_file,"r")
+        decoded = json.load(self._file_in)
+        self._json_dict = decoded
+        
+    def get_engines(self):
+        return self._search_key(self._json_dict,"engines")
+        
+    def get_engine(self,engine_name):
+        if engine_name in self.get_engines():
+            return self._search_key(self._json_dict,engine_name)
+        else:
+            print "%s not found"%engine_name
+            return {}
+        
+    def get_kojs(self):
+        return self._search_key(self._json_dict,"kojs")
+        
+    def _search_key(self,jsonDict,keyword=None):
+        val=jsonDict
+        if isinstance (jsonDict,dict):
+            for leaf_key, leaf_value in jsonDict.iteritems():
+                if str(keyword) == str(leaf_key):
+                    val = leaf_value
+                    break
+                else:
+                    val =self._search_key(leaf_value,keyword)
+
+        if isinstance (jsonDict,list):
+            for value in jsonDict:
+                self._search_key(value,keyword)
+                
+        return val

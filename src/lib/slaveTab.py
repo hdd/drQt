@@ -58,8 +58,8 @@ class SlaveNodeTab(QtGui.QWidget):
         self._tab_loadavg.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
         self.columns.append(self._tab_loadavg)
         
-        self._tab_pools=QtGui.QLabel()
-        self._tab_pools.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
+        self._tab_pools=QtGui.QComboBox()
+        #self._tab_pools.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
         self.columns.append(self._tab_pools)
         
         self._set_values()
@@ -77,6 +77,7 @@ class SlaveNodeTab(QtGui.QWidget):
         
         self._tab_os.setText("%s"%drqueue.osstring(self._drq_node_object.hwinfo.os))
         self._tab_cpus.setText("%d"%self._drq_node_object.hwinfo.ncpus)
+        self._tab_pools.addItem("%s"%self._drq_node_object.limits.pool)
                 
     def _set_context(self):
         for column in self.columns:

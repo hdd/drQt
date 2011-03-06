@@ -50,12 +50,13 @@ class JobTab(QtGui.QWidget):
         self._tab_procs.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
         self.columns.append(self._tab_procs)
         
-        self._tab_priority=QtGui.QLabel()
+        self._tab_priority=QtGui.QSpinBox()
         self._tab_priority.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
+        self._tab_priority.setMaximum(5000)
         self.columns.append(self._tab_priority)
 
-        self._tab_pool=QtGui.QLabel()
-        self._tab_pool.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
+        self._tab_pool=QtGui.QComboBox()
+        #self._tab_pool.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
         self.columns.append(self._tab_pool)
 
         self._tab_done=QtGui.QProgressBar()
@@ -91,8 +92,8 @@ class JobTab(QtGui.QWidget):
         done =100-(difframes*100)
                         
         self._tab_done.setValue(int(done))
-        self._tab_priority.setText("%d"%self._drq_job_object.priority)
-        self._tab_pool.setText("%s"%self._drq_job_object.limits.pool)
+        self._tab_priority.setValue(self._drq_job_object.priority)
+        self._tab_pool.addItem("%s"%self._drq_job_object.limits.pool)
             
     def _set_context(self):
         """
