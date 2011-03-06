@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'newJob.ui'
 #
-# Created: Sun Mar  6 18:27:03 2011
+# Created: Sun Mar  6 20:01:25 2011
 #      by: PyQt4 UI code generator 4.7.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -13,8 +13,12 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(887, 741)
-        self.gridLayout = QtGui.QGridLayout(Dialog)
-        self.gridLayout.setObjectName("gridLayout")
+        self.verticalLayout_4 = QtGui.QVBoxLayout(Dialog)
+        self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.LB_header = QtGui.QLabel(Dialog)
+        self.LB_header.setText("")
+        self.LB_header.setObjectName("LB_header")
+        self.verticalLayout_4.addWidget(self.LB_header)
         self.horizontalLayout_26 = QtGui.QHBoxLayout()
         self.horizontalLayout_26.setObjectName("horizontalLayout_26")
         self.label_25 = QtGui.QLabel(Dialog)
@@ -24,19 +28,7 @@ class Ui_Dialog(object):
         self.CB_job_type = QtGui.QComboBox(Dialog)
         self.CB_job_type.setObjectName("CB_job_type")
         self.horizontalLayout_26.addWidget(self.CB_job_type)
-        self.gridLayout.addLayout(self.horizontalLayout_26, 0, 0, 1, 1)
-        self.horizontalLayout_19 = QtGui.QHBoxLayout()
-        self.horizontalLayout_19.setObjectName("horizontalLayout_19")
-        self.PB_submit = QtGui.QPushButton(Dialog)
-        self.PB_submit.setObjectName("PB_submit")
-        self.horizontalLayout_19.addWidget(self.PB_submit)
-        self.PB_submit_stopped = QtGui.QPushButton(Dialog)
-        self.PB_submit_stopped.setObjectName("PB_submit_stopped")
-        self.horizontalLayout_19.addWidget(self.PB_submit_stopped)
-        self.PB_cancel = QtGui.QPushButton(Dialog)
-        self.PB_cancel.setObjectName("PB_cancel")
-        self.horizontalLayout_19.addWidget(self.PB_cancel)
-        self.gridLayout.addLayout(self.horizontalLayout_19, 2, 0, 1, 1)
+        self.verticalLayout_4.addLayout(self.horizontalLayout_26)
         self.tabWidget = QtGui.QTabWidget(Dialog)
         self.tabWidget.setObjectName("tabWidget")
         self.TB_information = QtGui.QWidget()
@@ -179,7 +171,19 @@ class Ui_Dialog(object):
         self.verticalLayout.addWidget(self.checkBox_15)
         self.verticalLayout_3.addWidget(self.groupBox)
         self.tabWidget.addTab(self.tab_3, "")
-        self.gridLayout.addWidget(self.tabWidget, 1, 0, 1, 1)
+        self.verticalLayout_4.addWidget(self.tabWidget)
+        self.horizontalLayout_19 = QtGui.QHBoxLayout()
+        self.horizontalLayout_19.setObjectName("horizontalLayout_19")
+        self.PB_submit = QtGui.QPushButton(Dialog)
+        self.PB_submit.setObjectName("PB_submit")
+        self.horizontalLayout_19.addWidget(self.PB_submit)
+        self.PB_submit_stopped = QtGui.QPushButton(Dialog)
+        self.PB_submit_stopped.setObjectName("PB_submit_stopped")
+        self.horizontalLayout_19.addWidget(self.PB_submit_stopped)
+        self.PB_cancel = QtGui.QPushButton(Dialog)
+        self.PB_cancel.setObjectName("PB_cancel")
+        self.horizontalLayout_19.addWidget(self.PB_cancel)
+        self.verticalLayout_4.addLayout(self.horizontalLayout_19)
 
         self.retranslateUi(Dialog)
         self.tabWidget.setCurrentIndex(0)
@@ -188,9 +192,6 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Dialog", None, QtGui.QApplication.UnicodeUTF8))
         self.label_25.setText(QtGui.QApplication.translate("Dialog", "Job Type", None, QtGui.QApplication.UnicodeUTF8))
-        self.PB_submit.setText(QtGui.QApplication.translate("Dialog", "Submit", None, QtGui.QApplication.UnicodeUTF8))
-        self.PB_submit_stopped.setText(QtGui.QApplication.translate("Dialog", "Submit Stopped", None, QtGui.QApplication.UnicodeUTF8))
-        self.PB_cancel.setText(QtGui.QApplication.translate("Dialog", "Cancel", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.TB_information), QtGui.QApplication.translate("Dialog", "information", None, QtGui.QApplication.UnicodeUTF8))
         self.label_32.setText(QtGui.QApplication.translate("Dialog", "Maximum Number Of Cpus", None, QtGui.QApplication.UnicodeUTF8))
         self.label_35.setText(QtGui.QApplication.translate("Dialog", "Maximum Number Of Cpus on One computer", None, QtGui.QApplication.UnicodeUTF8))
@@ -214,4 +215,7 @@ class Ui_Dialog(object):
         self.checkBox_14.setText(QtGui.QApplication.translate("Dialog", "Job depends on Id (jobid)", None, QtGui.QApplication.UnicodeUTF8))
         self.checkBox_15.setText(QtGui.QApplication.translate("Dialog", "Delete Job When finished", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), QtGui.QApplication.translate("Dialog", "Flags", None, QtGui.QApplication.UnicodeUTF8))
+        self.PB_submit.setText(QtGui.QApplication.translate("Dialog", "Submit", None, QtGui.QApplication.UnicodeUTF8))
+        self.PB_submit_stopped.setText(QtGui.QApplication.translate("Dialog", "Submit Stopped", None, QtGui.QApplication.UnicodeUTF8))
+        self.PB_cancel.setText(QtGui.QApplication.translate("Dialog", "Cancel", None, QtGui.QApplication.UnicodeUTF8))
 

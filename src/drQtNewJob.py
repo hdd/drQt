@@ -114,6 +114,7 @@ class NewJob(newJob_widget_class, newJob_base_class):
         self._options_group=None
         self.setupUi(self)
         self.setWindowTitle("Create New Job")
+        self.LB_header.setPixmap(QtGui.QPixmap(os.path.join(icons_path,"drQHeader.png"))) 
         #self.setFixedSize(600, 500)
         self.setWindowIcon(QtGui.QIcon(os.path.join(icons_path,"main.svg")))
         self._job_=drqueue.job()
