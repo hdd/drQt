@@ -10,6 +10,12 @@
     <height>741</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
@@ -24,17 +30,14 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_26">
      <item>
-      <widget class="QLabel" name="label_25">
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="text">
-        <string>Job Type</string>
+      <widget class="QComboBox" name="CB_job_type">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>35</height>
+        </size>
        </property>
       </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="CB_job_type"/>
      </item>
     </layout>
    </item>

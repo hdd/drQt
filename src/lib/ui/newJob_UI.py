@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'newJob.ui'
 #
-# Created: Sun Mar  6 20:01:25 2011
+# Created: Sun Mar  6 20:21:39 2011
 #      by: PyQt4 UI code generator 4.7.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -13,6 +13,11 @@ class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
         Dialog.resize(887, 741)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Minimum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(Dialog.sizePolicy().hasHeightForWidth())
+        Dialog.setSizePolicy(sizePolicy)
         self.verticalLayout_4 = QtGui.QVBoxLayout(Dialog)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.LB_header = QtGui.QLabel(Dialog)
@@ -21,11 +26,8 @@ class Ui_Dialog(object):
         self.verticalLayout_4.addWidget(self.LB_header)
         self.horizontalLayout_26 = QtGui.QHBoxLayout()
         self.horizontalLayout_26.setObjectName("horizontalLayout_26")
-        self.label_25 = QtGui.QLabel(Dialog)
-        self.label_25.setStyleSheet("None")
-        self.label_25.setObjectName("label_25")
-        self.horizontalLayout_26.addWidget(self.label_25)
         self.CB_job_type = QtGui.QComboBox(Dialog)
+        self.CB_job_type.setMinimumSize(QtCore.QSize(0, 35))
         self.CB_job_type.setObjectName("CB_job_type")
         self.horizontalLayout_26.addWidget(self.CB_job_type)
         self.verticalLayout_4.addLayout(self.horizontalLayout_26)
@@ -191,7 +193,6 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Dialog", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_25.setText(QtGui.QApplication.translate("Dialog", "Job Type", None, QtGui.QApplication.UnicodeUTF8))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.TB_information), QtGui.QApplication.translate("Dialog", "information", None, QtGui.QApplication.UnicodeUTF8))
         self.label_32.setText(QtGui.QApplication.translate("Dialog", "Maximum Number Of Cpus", None, QtGui.QApplication.UnicodeUTF8))
         self.label_35.setText(QtGui.QApplication.translate("Dialog", "Maximum Number Of Cpus on One computer", None, QtGui.QApplication.UnicodeUTF8))
