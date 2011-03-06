@@ -208,96 +208,107 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab">
-      <attribute name="title">
-       <string>Envs</string>
-      </attribute>
-      <layout class="QGridLayout" name="gridLayout_4">
-       <item row="0" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout_39">
-         <item>
-          <widget class="QCheckBox" name="CK_module">
-           <property name="text">
-            <string>Load Module</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="LE_module">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="1" column="0">
-        <widget class="QTableWidget" name="TW_envs">
-         <attribute name="horizontalHeaderStretchLastSection">
-          <bool>true</bool>
-         </attribute>
-         <attribute name="horizontalHeaderStretchLastSection">
-          <bool>true</bool>
-         </attribute>
-         <column>
-          <property name="text">
-           <string>Name</string>
-          </property>
-         </column>
-         <column>
-          <property name="text">
-           <string>Value</string>
-          </property>
-         </column>
-        </widget>
-       </item>
-      </layout>
-     </widget>
      <widget class="QWidget" name="tab_3">
       <attribute name="title">
        <string>Flags</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_5">
-       <item row="0" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout_40">
-         <item>
-          <widget class="QCheckBox" name="checkBox_12">
-           <property name="text">
-            <string>Mail Notification</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="checkBox_13">
-           <property name="text">
-            <string>Specific Email</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="lineEdit_8"/>
-         </item>
-        </layout>
-       </item>
-       <item row="1" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout_41">
-         <item>
-          <widget class="QCheckBox" name="checkBox_14">
-           <property name="text">
-            <string>Job depends on Id (jobid)</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="comboBox_9"/>
-         </item>
-        </layout>
-       </item>
-       <item row="2" column="0">
-        <widget class="QCheckBox" name="checkBox_15">
-         <property name="text">
-          <string>Delete Job When finished</string>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QGroupBox" name="groupBox_2">
+         <property name="title">
+          <string>Environments</string>
          </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_39">
+            <item>
+             <widget class="QCheckBox" name="CK_module">
+              <property name="text">
+               <string>Load Module</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="LE_module">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QTableWidget" name="TW_envs">
+            <attribute name="horizontalHeaderStretchLastSection">
+             <bool>true</bool>
+            </attribute>
+            <attribute name="horizontalHeaderStretchLastSection">
+             <bool>true</bool>
+            </attribute>
+            <column>
+             <property name="text">
+              <string>Name</string>
+             </property>
+            </column>
+            <column>
+             <property name="text">
+              <string>Value</string>
+             </property>
+            </column>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string>Options</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QCheckBox" name="checkBox_12">
+              <property name="text">
+               <string>Mail Notification</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkBox_13">
+              <property name="text">
+               <string>Specific Email</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="lineEdit_8"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_41">
+            <item>
+             <widget class="QCheckBox" name="checkBox_14">
+              <property name="text">
+               <string>Job depends on Id (jobid)</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="comboBox_9"/>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="checkBox_15">
+            <property name="text">
+             <string>Delete Job When finished</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
