@@ -1,0 +1,112 @@
+{
+"engines":[
+	"Generic",
+	"MayaRender",
+	"3DLRender",
+	"3DLShader",
+	"MentalRay",
+	"Custom"
+],
+"kojs":{
+    "Generic":{
+       	"description":"This is a generic command , can be used to run shell commmands",
+        "extension_filter":["*"],
+        "env_module_preload":"None",
+        "pre_cmd":"${pre_cmd}",
+        "cmd":"${cmd}",
+        "post_cmd":"${post_cmd}",
+        "cmd_options":{}
+     },
+    "MayaRender":{
+        "description":"generic Maya Render",
+        "extension_filter":["*.ma","*.mb"],
+        "env_module_preload":"maya2011_64",
+        "pre_cmd":"${pre_cmd}",
+        "cmd":"Render",
+        "post_cmd":"${post_cmd}",
+        "cmd_options":
+            {
+            "render":"${input_file}",
+            "resx":"${resx}",
+            "resy":"${resy}",
+            "start_frame":"${start_frame}",
+            "end_frame":"${end_frame}",
+            "step":"${step}",
+            "padding":"${padding}"
+            }
+     },
+    "3DLRender":{
+        "description":"generic 3DElight render",
+        "extension_filter":["*.rib"],
+        "env_module_preload":"3delight_64",
+        "pre_cmd":"${pre_cmd}",
+        "cmd":"renderdl",
+        "post_cmd":"${post_cmd}",
+        "cmd_options":
+            {
+            "resx":"${resx}",
+            "resy":"${resy}",
+            "start_frame":"${start_frame}",
+            "end_frame":"${end_frame}",
+            "step":"${step}",
+            "padding":"${padding}"
+            }
+     },
+    "3DLShader":{
+        "description":"3Delight shader compilation",
+        "extension_filter":["*.sl"],
+        "env_module_preload":"3delight_64",
+        "pre_cmd":"${pre_cmd}",
+        "cmd":"renderdl",
+        "post_cmd":"${post_cmd}",
+        "cmd_options":
+            {
+            "input":"${input_file}",
+            "resx":"${resx}",
+            "resy":"${resy}",
+            "start_frame":"${start_frame}",
+            "end_frame":"${end_frame}",
+            "step":"${step}",
+            "padding":"${padding}"
+            }
+     	},
+    "MentalRay":{
+        "description":"MentalRay standalone",
+        "extension_filter":["*.mi"],
+        "env_module_preload":"mray_64",
+        "pre_cmd":"${pre_cmd}",
+        "cmd":"renderdl",
+        "post_cmd":"${post_cmd}",
+        "cmd_options":
+            {
+            "input":"${input_file}",
+            "resx":"${resx}",
+            "resy":"${resy}",
+            "start_frame":"${start_frame}",
+            "end_frame":"${end_frame}",
+            "step":"${step}",
+            "padding":"${padding}"
+            }
+     	},
+    "Custom":{
+        "description":"Custom",
+        "extension_filter":["*"],
+        "env_module_preload":"${env_module_preload}",
+        "pre_cmd":"${pre_cmd}",
+        "cmd":"${cmd}",
+        "post_cmd":"${post_cmd}",
+        "cmd_options":
+            {
+            "input":"${input_file}",
+            "resx":"${resx}",
+            "resy":"${resy}",
+            "start_frame":"${start_frame}",
+            "end_frame":"${end_frame}",
+            "step":"${step}",
+            "padding":"${padding}"
+            }
+     	}
+ 
+     }
+
+}
