@@ -77,9 +77,7 @@ class EngineWidget(QtGui.QWidget):
         self.info_box.setTitle("Command Preview")
         layout_info_box = QtGui.QVBoxLayout()
         layout_info_box.addWidget(self._info_line)
-        
-        self._layout.addLayout(layout_info_box)           
-                           
+        self.info_box.setLayout(layout_info_box)                           
         self.setLayout(self._layout)
 
     def _emit_updated(self,value):
