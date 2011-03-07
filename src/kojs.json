@@ -5,7 +5,8 @@
 	"3DLRender",
 	"3DLShader",
 	"MentalRay",
-	"Custom"
+	"Custom",
+	"Bake"
 ],
 "kojs":{
     "Generic":{
@@ -26,7 +27,8 @@
         "post_cmd":"${post_cmd}",
         "cmd_options":
             {
-            "render":"${input_file}",
+            "proj":"${project}",
+            "file":"${input_file}",
             "resx":"${resx}",
             "resy":"${resy}",
             "start_frame":"${start_frame}",
@@ -102,8 +104,21 @@
             "resy":"${resy}",
             "start_frame":"${start_frame}",
             "end_frame":"${end_frame}",
-            "step":"1",
-            "padding":"4"
+            "step":"${step}",
+            "padding":"${padding}"
+            }
+     	},
+   "Bake":{
+        "description":"Bake Job Test",
+        "extension_filter":["*"],
+        "env_module_preload":"${env_module_preload}",
+        "pre_cmd":"${pre_cmd}",
+        "cmd":"Bake",
+        "post_cmd":"bake_cleanup",
+        "cmd_options":
+            {
+            "input":"${input_file}",
+            "output":"${output_file}"
             }
      	}
  
