@@ -126,7 +126,8 @@ class EngineWidget(QtGui.QWidget):
         layout.addWidget(self._options_group)
         layout.setAlignment(self,QtCore.Qt.AlignTop|QtCore.Qt.AlignHCenter)
         box_layout.addLayout(layout)
-        
+        self._layout.addWidget(self.info_box)
+                
         for k,v in engine_dict.iteritems():
             if isinstance(v,dict):
                 '''
@@ -151,12 +152,13 @@ class EngineWidget(QtGui.QWidget):
                         widget.setEnabled(False)
                     else:
                         widget.set_value("")
-                        
+                                                
                     self.connect(widget,QtCore.SIGNAL("updated(QString)"),self._emit_updated)
                     layout_attribute.addWidget(widget)
                     self._attribute_widget_list[k]=widget
                     
-        self._layout.addWidget(self.info_box)
+
+
                                 
     def get_attributes_widgets(self):
         return self._attribute_widget_list
