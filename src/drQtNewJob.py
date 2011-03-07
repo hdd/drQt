@@ -230,6 +230,7 @@ class NewJob(newJob_widget_class, newJob_base_class):
         self._widgets[engine_name]=engine_widget
         self.LY_information.addWidget(engine_widget)
         
+        
     def enable_engine(self,engine_name):
         for k,v in self._widgets.iteritems():
             v.hide()
@@ -240,6 +241,7 @@ class NewJob(newJob_widget_class, newJob_base_class):
         widget=self._widgets[str(engine_name)]
         widget.show()
         self._current_active_widget=widget
+        self.process()
         
     def fill_job_types(self):
         engines=self._kojs.get_engines()
