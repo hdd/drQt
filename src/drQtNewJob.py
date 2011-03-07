@@ -143,6 +143,9 @@ class EngineWidget(QtGui.QWidget):
                 self._options_group.setTitle(k.capitalize())
                
                 for kl, vl in v.iteritems():
+                    if isinstance(vl,list):
+                        vl= self._flat_list(vl)
+                        
                     widget=EntryWidget("%s"%kl,"%s"%vl)
                     if self._chk_readonly(str(vl)):
                         widget.setEnabled(False)
@@ -154,7 +157,10 @@ class EngineWidget(QtGui.QWidget):
                     self._options_widget_list[kl]=widget
             else:
                 if k !="description":
+                    if isinstance(v,list):
+                        v=self._flat_list(v)
                     widget=EntryWidget("%s"%k,"%s"%v)
+                    
                     if self._chk_readonly(str(v)):
                         widget.setEnabled(False)
                     else:
@@ -164,7 +170,10 @@ class EngineWidget(QtGui.QWidget):
                     layout_attribute.addWidget(widget)
                     self._attribute_widget_list[k]=widget
                    
-
+    def _flat_list(self,input_list):
+        result = ",".join(input_list)
+        print "result" ,str(result)
+        return result
 
                                
     def get_attributes_widgets(self):
