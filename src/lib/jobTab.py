@@ -92,7 +92,7 @@ class JobTab(QtGui.QWidget):
         done =100-(difframes*100)
                         
         self._tab_done.setValue(int(done))
-        self._tab_priority.setValue(self._drq_job_object.priority)
+        self._tab_priority.setValue(int(self._drq_job_object.priority))
         self._tab_pool.addItem("%s"%self._drq_job_object.limits.pool)
             
     def _set_context(self):
