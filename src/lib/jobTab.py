@@ -97,13 +97,18 @@ class JobTab(QtGui.QWidget):
         self._tab_priority.setValue(int(self._drq_job_object.priority))
         self._tab_pool.setText("%s"%self._drq_job_object.limits.pool)
             
-            
-        print pformat(dir(self._drq_job_object.envvars))
-
+#        id = self._drq_job_object.id
+#        print self._drq_job_object.name
+#                
 #        for i in range(self._drq_job_object.envvars.nvariables):
-#            self._drq_job_object.envvars
-#            print self._drq_job_object.envvars.name
+#            env_id= drqueue.request_job_envvars(id,self._drq_job_object.envvars,i)
+#            print self._drq_job_object.envvars_dump_info
 #            
+#            if ptr:
+#                print ">>",id,self._drq_job_object.envvars.variables.ptr[i].name
+#            var= drqueue.request_job_envvars(id,self._drq_job_object.envvars,i)
+#            print var, type(var)
+            
     def _set_context(self):
         """
         bind the context menu to all the columns
