@@ -2,6 +2,7 @@ import sys
 import os
 
 import logging
+from pprint import pformat
 
 import PyQt4.QtGui as QtGui
 import PyQt4.QtCore as QtCore
@@ -96,6 +97,13 @@ class JobTab(QtGui.QWidget):
         self._tab_priority.setValue(int(self._drq_job_object.priority))
         self._tab_pool.setText("%s"%self._drq_job_object.limits.pool)
             
+            
+        print pformat(dir(self._drq_job_object.envvars))
+
+#        for i in range(self._drq_job_object.envvars.nvariables):
+#            self._drq_job_object.envvars
+#            print self._drq_job_object.envvars.name
+#            
     def _set_context(self):
         """
         bind the context menu to all the columns
