@@ -2,6 +2,7 @@ import sys
 import os
 
 import logging
+from pprint import pformat
 
 import PyQt4.QtGui as QtGui
 import PyQt4.QtCore as QtCore
@@ -25,7 +26,6 @@ class SlaveNodeTab(QtGui.QWidget):
                
         self.icons=[]       
 
-  
         self.icons.append(QtGui.QPixmap(os.path.join(icons_path,"stop.png")))
         self.icons.append(QtGui.QPixmap(os.path.join(icons_path,"ok.png")))       
         #node_properties=["Id","Enabled","Running","Name","Os","CPUs","Load Avg","Pools"]
@@ -77,7 +77,10 @@ class SlaveNodeTab(QtGui.QWidget):
         
         self._tab_os.setText("%s"%drqueue.osstring(self._drq_node_object.hwinfo.os))
         self._tab_cpus.setText("%d"%self._drq_node_object.hwinfo.ncpus)
-        self._tab_pools.addItem("%s"%self._drq_node_object.limits.pool)
+        
+        for i in range(self._drq_node_object.limits.npools):
+            pool = self._drq_node_object.limits.get_pool(i).name
+            self._tab_pools.addItem("%s"%pool)
                 
     def _set_context(self):
         for column in self.columns:
