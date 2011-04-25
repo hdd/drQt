@@ -4,10 +4,18 @@ import math
 import random
 
 os.environ["DEBUG"]="1"
-import hlog as log
+
+try:
+    # https://github.com/hdd/hlog
+    import hlog as log
+except:
+    import logging as log
 
 import PyQt4.QtGui as QtGui
 import PyQt4.QtCore as QtCore
+
+from utils import icons_path
+from utils import tooltips_path
 
 class AttributeItem(QtGui.QGraphicsItem):
     
@@ -110,8 +118,10 @@ class NodeItem(QtGui.QGraphicsItem ):
         super(NodeItem,self).__init__(parent)
         self.setFlag(QtGui.QGraphicsItem.ItemIsFocusable)
         self.setFlag(QtGui.QGraphicsItem.ItemIsMovable)
-        self.name="Job:#%d\nName: %s"%(drq_job_object.id,drq_job_object.name)
-        
+        if drq_job_object:
+            self.name="Job:#%d\nName: %s"%(drq_job_object.id,drq_job_object.name)
+        else:
+            self.name="Virtual Node"
         self.setScale(1.4)
         self.rect=QtCore.QRectF(-self.xsize/2,-self.ysize/2,self.xsize,self.ysize)
         
@@ -147,6 +157,8 @@ class NodeItem(QtGui.QGraphicsItem ):
             attr.setPos(pos)
             out_attributes.append(attr)
             
+        self._set_tooltip()    
+    
     def set_name(self,name="Node"):
         self.name=name
         
@@ -164,7 +176,22 @@ class NodeItem(QtGui.QGraphicsItem ):
 
         painter.drawText(self.rect,node_text,QtGui.QTextOption(QtCore.Qt.AlignVCenter|QtCore.Qt.AlignHCenter))  
 
+    def _set_tooltip(self):
+        """
+        build up the tooltip using the drq job object
+        bind the tooltip to all the columns
+        """
 
+        if self._drq_job_object:
+            html_tooltip=open(os.path.join(tooltips_path,"job_info.html"),"r")
+            tooltipData ={}
+            tooltipData["cmd"]=self._drq_job_object.cmd
+            tooltipData["envvars"]=self._drq_job_object.envvars
+            tooltipData["dependid"]=self._drq_job_object.dependid
+            
+            formattedTolltip=str(html_tooltip.read()).format(**tooltipData)
+            self.setToolTip(formattedTolltip)
+                    
 class NodeScene(QtGui.QGraphicsScene):
     
     itemSelected = QtCore.pyqtSignal(QtGui.QGraphicsItem)
@@ -311,7 +338,7 @@ class NodeView(QtGui.QGraphicsView):
         self.scale(scaleFactor, scaleFactor)  
 
     def add_node(self,drq_job_object):
-        job_node = NodeItem(drq_job_object=drq_job_object)
+        job_node = NodeItem(drq_job_object=drq_job_object,parent=self)
         self.scene.addItem(job_node)
                                             
         
