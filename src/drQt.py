@@ -198,7 +198,8 @@ class drQt(drQtUI.Ui_MainWindow,QtGui.QMainWindow):
         return job_list
     
     def _get_all_slaves(self):
-        computer_list = drqueue.request_computer_list (drqueue.CLIENT)
+        computer_list = drqueue.request_computer_list(drqueue.CLIENT)
+        print computer_list
         return computer_list
     
     def _create_context(self,QPoint):

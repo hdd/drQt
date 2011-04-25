@@ -11,7 +11,7 @@ import drqueue.base.libdrqueue as drqueue
 
 from utils import icons_path
 from utils import tooltips_path
-from lib.nodeViewer import NodeViewer
+from lib.newNodeViewer import NodeViewer
 
 logging.basicConfig()
 log = logging.getLogger("job_tab")
@@ -103,7 +103,7 @@ class JobTab(QtGui.QWidget):
 #        for i in range(self._drq_job_object.envvars.nvariables):
 #            env_id= drqueue.request_job_envvars(id,self._drq_job_object.envvars,i)
 #            print self._drq_job_object.envvars_dump_info
-#            
+            
 #            if ptr:
 #                print ">>",id,self._drq_job_object.envvars.variables.ptr[i].name
 #            var= drqueue.request_job_envvars(id,self._drq_job_object.envvars,i)
