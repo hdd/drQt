@@ -306,14 +306,14 @@ class NodeScene(QtGui.QGraphicsScene):
 class NodeView(QtGui.QGraphicsView):
     def __init__(self,parent=None):
         super(NodeView,self).__init__(parent)
-        
-        self.view = QtGui.QGraphicsView()
         self.scene = NodeScene(parent=self)
-        
+        self.scene.setItemIndexMethod(QtGui.QGraphicsScene.NoIndex)
+        self.scene.setSceneRect(-200, -200, 400, 400)
+                
         layout = QtGui.QVBoxLayout()
-        layout.addWidget(self.view)
         self.setLayout(layout)
-        self.view.setScene(self.scene)
+        self.setScene(self.scene)
+        
         self.setWindowTitle("job node view")
 
         
@@ -339,7 +339,7 @@ class NodeView(QtGui.QGraphicsView):
         if factor < 0.07 or factor > 100:
             return
 
-        self.scale(scaleFactor, scaleFactor)  
+        self.scale(scaleFactor, scaleFactor)
 
     def add_node(self,drq_job_object):
         log.debug("adding node...%s"%drq_job_object)
