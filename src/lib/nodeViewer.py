@@ -116,21 +116,25 @@ class NodeItem(QtGui.QGraphicsItem ):
     
     def __init__(self,drq_job_object=None,parent=None):
         super(NodeItem,self).__init__(parent)
+        
+        self._drq_job_object = drq_job_object
+
         self.setFlag(QtGui.QGraphicsItem.ItemIsFocusable)
         self.setFlag(QtGui.QGraphicsItem.ItemIsMovable)
-        if drq_job_object:
-            self.name="Job:#%d\nName: %s"%(drq_job_object.id,drq_job_object.name)
+        if self._drq_job_object:
+            self.name="Job:#%d\nName: %s"%(self._drq_job_object.id,self._drq_job_object.name)
         else:
             self.name="Virtual Node"
+            
         self.setScale(1.4)
         self.rect=QtCore.QRectF(-self.xsize/2,-self.ysize/2,self.xsize,self.ysize)
+
+        self.create_attrs()
+        self._set_tooltip()    
         
-        self.setFlag(QtGui.QGraphicsItem.ItemIsMovable)
-        self.setFlag(QtGui.QGraphicsItem.ItemIsFocusable)
-        
+    def create_attrs(self):
         in_attributes=["in_id"]
         out_attributes=["out_id"]
-        self._drq_job_object = drq_job_object
         
         offset=10
         
@@ -157,7 +161,6 @@ class NodeItem(QtGui.QGraphicsItem ):
             attr.setPos(pos)
             out_attributes.append(attr)
             
-        self._set_tooltip()    
     
     def set_name(self,name="Node"):
         self.name=name
@@ -181,7 +184,7 @@ class NodeItem(QtGui.QGraphicsItem ):
         build up the tooltip using the drq job object
         bind the tooltip to all the columns
         """
-
+        log.debug("setting tooltips for object %s"%self._drq_job_object)
         if self._drq_job_object:
             html_tooltip=open(os.path.join(tooltips_path,"job_info.html"),"r")
             tooltipData ={}
@@ -190,6 +193,7 @@ class NodeItem(QtGui.QGraphicsItem ):
             tooltipData["dependid"]=self._drq_job_object.dependid
             
             formattedTolltip=str(html_tooltip.read()).format(**tooltipData)
+            
             self.setToolTip(formattedTolltip)
                     
 class NodeScene(QtGui.QGraphicsScene):
@@ -338,7 +342,8 @@ class NodeView(QtGui.QGraphicsView):
         self.scale(scaleFactor, scaleFactor)  
 
     def add_node(self,drq_job_object):
-        job_node = NodeItem(drq_job_object=drq_job_object,parent=self)
+        log.debug("adding node...%s"%drq_job_object)
+        job_node = NodeItem(drq_job_object=drq_job_object)
         self.scene.addItem(job_node)
                                             
         
@@ -347,7 +352,7 @@ class NodeViewer(QtGui.QDialog):
         super(NodeViewer,self).__init__(parent)
         self.layout = QtGui.QVBoxLayout()
         self.setLayout(self.layout)
-        self.view = NodeView()
+        self.view = NodeView(self)
         self.layout.addWidget(self.view)
     
     def add_node(self,drq_job_object):
@@ -362,7 +367,6 @@ def main():
     splash.show()
     
     app.processEvents()
-
     
     dialog = NodeViewer()
     dialog.show()

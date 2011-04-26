@@ -1,8 +1,15 @@
 import sys
 import os
 
-import logging
 from pprint import pformat
+
+os.environ["DEBUG"]="1"
+
+try:
+    # https://github.com/hdd/hlog
+    import hlog as log
+except:
+    import logging as log
 
 import PyQt4.QtGui as QtGui
 import PyQt4.QtCore as QtCore
@@ -11,11 +18,7 @@ import drqueue.base.libdrqueue as drqueue
 
 from utils import icons_path
 from utils import tooltips_path
-from lib.newNodeViewer import NodeViewer
-
-logging.basicConfig()
-log = logging.getLogger("job_tab")
-log.setLevel(logging.DEBUG)
+from lib.nodeViewer import NodeViewer
 
 class JobTab(QtGui.QWidget):
     
@@ -73,9 +76,9 @@ class JobTab(QtGui.QWidget):
     def _node_view_show(self):
         log.debug("starting node view")
         NW_widget=NodeViewer(self)
-        NW_widget.add_node(self._drq_job_object)
         NW_widget.show()
-        
+        NW_widget.add_node(self._drq_job_object)
+       
     
     def _set_values(self):        
         """

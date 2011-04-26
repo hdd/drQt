@@ -9,6 +9,16 @@ import PyQt4.QtWebKit as QtWebKit
 
 from lib.utils import KojsConfigParser
 
+
+os.environ["DEBUG"]="1"
+
+try:
+    # https://github.com/hdd/hlog
+    import hlog as log
+except:
+    import logging as log
+
+
 #try:
 #    import drqueue.base.libdrqueue as drqueue
 #except:
@@ -102,7 +112,7 @@ class EngineWidget(QtGui.QWidget):
         if self._widget_list.has_key(widget_name):
             return self._widget_list[widget_name]
         else:
-            print "%s not found in widget list"%widget_name
+            log.debug("%s not found in widget list"%widget_name)
             return None
    
     def set_info_line(self,value):
@@ -172,7 +182,7 @@ class EngineWidget(QtGui.QWidget):
                    
     def _flat_list(self,input_list):
         result = ",".join(input_list)
-        print "result" ,str(result)
+        log.debug("flat list result %s"%str(result))
         return result
 
                                

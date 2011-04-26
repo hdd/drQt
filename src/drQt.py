@@ -2,7 +2,15 @@
 
 import sys
 import os
-import logging
+
+os.environ["DEBUG"]="1"
+
+try:
+    # https://github.com/hdd/hlog
+    import hlog as log
+except:
+    import logging as log
+
 
 import PyQt4.QtGui as QtGui
 import PyQt4.QtCore as QtCore
@@ -20,11 +28,6 @@ from lib.utils import icons_path
 from drQtNewJob import NewJob
 
 import lib.ui.drQt_UI as drQtUI
-
-logging.basicConfig()
-log = logging.getLogger("drQt")
-log.setLevel(logging.DEBUG)
-
 
 class AboutDialog(QtGui.QDialog):
     def __init__(self,parent=None):
@@ -174,7 +177,6 @@ class drQt(drQtUI.Ui_MainWindow,QtGui.QMainWindow):
             job_tab.add_to_table(self.TW_job, i)
             self.connect(job_tab, QtCore.SIGNAL('update'), self.refresh)
             self.jobs_tab_list.append(job_tab)
-            
         
     def init_slaves_tabs(self):
         self.nodes_tab_list=[]
@@ -183,6 +185,7 @@ class drQt(drQtUI.Ui_MainWindow,QtGui.QMainWindow):
         num_nodes = len(nodes)
         self.TW_node.setRowCount(num_nodes)
         for i in range(num_nodes):
+            log.debug("create slave Node Tab : %s"%type(nodes[i]))
             node_tab = SlaveNodeTab(nodes[i],parent=self.TW_node)
             node_tab.add_to_table(self.TW_node, i)
             self.connect(node_tab, QtCore.SIGNAL('update'), self.refresh)
@@ -199,7 +202,6 @@ class drQt(drQtUI.Ui_MainWindow,QtGui.QMainWindow):
     
     def _get_all_slaves(self):
         computer_list = drqueue.request_computer_list(drqueue.CLIENT)
-        print computer_list
         return computer_list
     
     def _create_context(self,QPoint):
