@@ -314,9 +314,6 @@ class NodeView(QtGui.QGraphicsView):
         self.setLayout(layout)
         self.setScene(self.scene)
         
-        self.setWindowTitle("job node view")
-
-        
     def deleteItem(self):
         for item in self.scene.selectedItems():
             if isinstance(item, ConnectionItem):
