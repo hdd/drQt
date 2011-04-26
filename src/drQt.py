@@ -27,6 +27,7 @@ from lib.jobTab import JobTab
 from lib.utils import Timer
 from lib.utils import icons_path
 from drQtNewJob import NewJob
+import lib.utils
 
 import lib.ui.drQt_UI as drQtUI
 
@@ -52,7 +53,7 @@ class drQt(drQtUI.Ui_MainWindow,QtGui.QMainWindow):
         super(drQt,self).__init__(parent=parent)
         
         try:
-            self._get_all_jobs()
+            lib.utils.get_all_jobs()
         except:
             raise "NO MASTER FOUND"
         
@@ -169,8 +170,9 @@ class drQt(drQtUI.Ui_MainWindow,QtGui.QMainWindow):
         self.jobs_tab_list=[]
         log.debug("building job tabs...")
         self.TW_job.clearContents()
-        jobs=self._get_all_jobs()
+        jobs=lib.utils.get_all_jobs()
         num_jobs = len(jobs)
+        log.debug("num jobs %s"%num_jobs)
         self.TW_job.setRowCount(num_jobs)        
 
         for i in range(num_jobs):
@@ -182,7 +184,7 @@ class drQt(drQtUI.Ui_MainWindow,QtGui.QMainWindow):
     def init_slaves_tabs(self):
         self.nodes_tab_list=[]
         log.debug("building nodes tabs...")
-        nodes=self._get_all_slaves()
+        nodes=lib.utils.get_all_slaves()
         num_nodes = len(nodes)
         self.TW_node.setRowCount(num_nodes)
         for i in range(num_nodes):
@@ -197,13 +199,6 @@ class drQt(drQtUI.Ui_MainWindow,QtGui.QMainWindow):
         self.TW_main.setTabIcon(0,QtGui.QIcon(os.path.join(icons_path,"job.svg")))
         self.TW_main.setTabIcon(1,QtGui.QIcon(os.path.join(icons_path,"nodes.svg")))        
         
-    def _get_all_jobs(self):
-        job_list = drqueue.request_job_list(drqueue.CLIENT)
-        return job_list
-    
-    def _get_all_slaves(self):
-        computer_list = drqueue.request_computer_list(drqueue.CLIENT)
-        return computer_list
     
     def _create_context(self,QPoint):
         """

@@ -7,6 +7,11 @@ import PyQt4.uic as uic
 
 import PyQt4.QtCore as QtCore
 
+try:
+    import drqueue.base.libdrqueue as drqueue
+except:
+    raise "libdrqueue not found! please check drqueue python installation"
+
 current_path = os.path.dirname(__file__)
 
 tooltips_path= os.path.join(current_path,"ui","tooltips")
@@ -17,6 +22,15 @@ main_widget_class, main_base_class = uic.loadUiType(main_ui_path)
 
 newJob_ui_path=os.path.join(current_path,"ui","newJob.ui")
 newJob_widget_class, newJob_base_class = uic.loadUiType(newJob_ui_path)
+
+
+def get_all_jobs():
+    job_list = drqueue.request_job_list(drqueue.CLIENT)
+    return job_list
+
+def get_all_slaves():
+    computer_list = drqueue.request_computer_list(drqueue.CLIENT)
+    return computer_list
 
 class Timer(QtCore.QThread):
     """
