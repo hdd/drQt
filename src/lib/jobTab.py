@@ -19,6 +19,7 @@ import drqueue.base.libdrqueue as drqueue
 from utils import icons_path
 from utils import tooltips_path
 from lib.nodeViewer import NodeViewer
+import utils
 
 class JobTab(QtGui.QWidget):
     
@@ -77,10 +78,25 @@ class JobTab(QtGui.QWidget):
         log.debug("starting node view")
         NW_widget=NodeViewer(self)
         NW_widget.show()
-        
-        log.debug(pformat(self._drq_job_object.__dict__))
+                
+        jobs=utils.get_all_jobs()
+        depend_id=self._drq_job_object.dependid
         NW_widget.add_node(self._drq_job_object)
-       
+        
+        log.debug("id depend: %d"%depend_id)
+        
+        if self._drq_job_object.id == depend_id:
+            return 
+        
+        for job in jobs:
+            jd = job.id
+            
+            log.debug("current id : %d \tdepend : %d"%(jd,depend_id))
+
+            if jd == depend_id:
+                log.debug("Adding node %s to the network"%job.name)
+                NW_widget.add_node(job)
+      
     
     def _set_values(self):        
         """
