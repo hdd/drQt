@@ -353,7 +353,11 @@ class NodeViewer(QtGui.QDialog):
         self.layout = QtGui.QVBoxLayout()
         self.setLayout(self.layout)
         self.view = NodeView(self)
+        icon = QtGui.QLabel()
+        icon.setPixmap(QtGui.QPixmap(os.path.join(icons_path,"drQHeader.png")))
+        self.layout.addWidget(icon)
         self.layout.addWidget(self.view)
+        self.setWindowTitle("DrQueue Node Viewer")
     
     def add_node(self,drq_job_object):
         self.view.add_node(drq_job_object)
